@@ -386,18 +386,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (typeof gsap !== 'undefined') {
-                    // GSAP ScrollTrigger Scrub Tweaks with Hero Pinning
+                    // GSAP ScrollTrigger Scrub Tweaks (Full Page Scroll Sync)
                     gsap.to(frameConfig, {
                         frame: frameCount - 1,
                         snap: "frame",
                         ease: "none",
                         scrollTrigger: {
-                            trigger: "#hero",
+                            trigger: "body",
                             start: "top top",
-                            end: "+=2500", // Smooth long scroll distance for frames
-                            scrub: 1, // 1 second smoothing
-                            pin: true,
-                            anticipatePin: 1
+                            end: "bottom bottom",
+                            scrub: 1 // 1 second smoothing
                         },
                         onUpdate: () => {
                             renderPending = true; // Flag for requestAnimationFrame
