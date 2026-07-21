@@ -27,3 +27,32 @@ on contact_inquiries
 for select
 to authenticated
 using (true);
+
+-- Create the table for product reviews
+create table product_reviews (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  product_id text not null,
+  name text not null,
+  rating integer not null,
+  title text not null,
+  comment text not null,
+  status text default 'approved'
+);
+
+-- Enable Row Level Security (RLS)
+alter table product_reviews enable row level security;
+
+-- Create an RLS policy to allow anonymous/public inserts
+create policy "Allow public inserts on reviews"
+on product_reviews
+for insert
+to public
+with check (true);
+
+-- Create an RLS policy to allow public selects
+create policy "Allow public selects on reviews"
+on product_reviews
+for select
+to public
+using (true);

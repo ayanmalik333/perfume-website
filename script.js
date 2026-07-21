@@ -712,40 +712,98 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
 
-                // Handle Review Submission
+                // Handle Review Loading and Submission
+                const supabaseUrl = 'https://ohgtcppbhmkqjkheuskv.supabase.co';
+                const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZ3RjcHBiaG1rcWpqaGV1c2t2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2MzIzMTgsImV4cCI6MjEwMDIwODMxOH0.uNkoYcfpTbHZjq5yAo-1jtSwoTu3jYQVAkEGx8f3CHQ';
+                const reviewsEndpoint = `${supabaseUrl}/rest/v1/product_reviews`;
+
                 const reviewForm = document.getElementById('review-form');
                 const reviewList = document.getElementById('pd-reviews-list');
-                if (reviewForm && reviewList) {
-                    reviewForm.addEventListener('submit', (e) => {
-                        e.preventDefault();
-                        const name = document.getElementById('review-name').value;
-                        const rating = document.getElementById('review-rating').value;
-                        const title = document.getElementById('review-title').value;
-                        const text = document.getElementById('review-text').value;
-
-                        const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-                        
-                        const newReviewHTML = `
-                            <div class="bg-darkBg p-6 border border-accent/15 rounded-xl reveal-up is-visible">
-                                <div class="flex justify-between items-start mb-4">
-                                    <div>
-                                        <h5 class="text-[13px] font-bold text-lightWarm tracking-wider">${name}</h5>
-                                        <div class="flex items-center space-x-2 mt-1">
-                                            <span class="text-accent text-[10px]">VERIFIED BUYER</span>
-                                            <span class="text-[#a0a0a5] text-[10px]">&bull; ${date}</span>
+                
+                const fetchReviews = async () => {
+                    if (!reviewList) return;
+                    try {
+                        const response = await fetch(`${reviewsEndpoint}?product_id=eq.${product.id}&select=*&order=created_at.desc`, {
+                            headers: {
+                                'apikey': supabaseKey,
+                                'Authorization': `Bearer ${supabaseKey}`
+                            }
+                        });
+                        const data = await response.json();
+                        if (data && data.length > 0) {
+                            reviewList.innerHTML = data.map(r => {
+                                const date = new Date(r.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                                return `
+                                <div class="bg-darkBg p-6 border border-accent/15 rounded-xl reveal-up is-visible mt-6">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <div>
+                                            <h5 class="text-[13px] font-bold text-lightWarm tracking-wider">${r.name}</h5>
+                                            <div class="flex items-center space-x-2 mt-1">
+                                                <span class="text-accent text-[10px]">VERIFIED BUYER</span>
+                                                <span class="text-[#a0a0a5] text-[10px]">&bull; ${date}</span>
+                                            </div>
+                                        </div>
+                                        <div class="text-accent text-sm">
+                                            ${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}
                                         </div>
                                     </div>
-                                    <div class="text-accent text-sm">
-                                        ${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}
-                                    </div>
+                                    <h6 class="text-[12px] font-bold text-lightWarm mb-2 uppercase tracking-wide">${r.title}</h6>
+                                    <p class="text-[12px] text-[#ECEAE6]/70 leading-relaxed font-sans">${r.comment}</p>
                                 </div>
-                                <h6 class="text-[12px] font-bold text-lightWarm mb-2 uppercase tracking-wide">${title}</h6>
-                                <p class="text-[12px] text-[#ECEAE6]/70 leading-relaxed font-sans">${text}</p>
-                            </div>
-                        `;
-                        
-                        reviewList.insertAdjacentHTML('afterbegin', newReviewHTML);
-                        reviewForm.reset();
+                                `;
+                            }).join('');
+                        } else {
+                            reviewList.innerHTML = '<p class="text-[12px] text-[#a0a0a5] text-center mt-6">Be the first to review this product.</p>';
+                        }
+                    } catch (error) {
+                        console.error('Error fetching reviews:', error);
+                    }
+                };
+
+                fetchReviews();
+
+                if (reviewForm && reviewList) {
+                    reviewForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const submitBtn = reviewForm.querySelector('button[type="submit"]');
+                        const originalBtnText = submitBtn.innerText;
+                        submitBtn.innerText = "SUBMITTING...";
+                        submitBtn.disabled = true;
+
+                        const name = document.getElementById('review-name').value;
+                        const rating = parseInt(document.getElementById('review-rating').value);
+                        const title = document.getElementById('review-title').value;
+                        const comment = document.getElementById('review-text').value;
+
+                        try {
+                            const response = await fetch(reviewsEndpoint, {
+                                method: 'POST',
+                                headers: {
+                                    'apikey': supabaseKey,
+                                    'Authorization': `Bearer ${supabaseKey}`,
+                                    'Content-Type': 'application/json',
+                                    'Prefer': 'return=representation'
+                                },
+                                body: JSON.stringify({
+                                    product_id: product.id,
+                                    name,
+                                    rating,
+                                    title,
+                                    comment
+                                })
+                            });
+
+                            if (!response.ok) throw new Error('Failed to submit review');
+                            
+                            reviewForm.reset();
+                            await fetchReviews();
+                        } catch (error) {
+                            console.error('Error submitting review:', error);
+                            alert("Failed to submit your review. Please try again later.");
+                        } finally {
+                            submitBtn.innerText = originalBtnText;
+                            submitBtn.disabled = false;
+                        }
                     });
                 }
             }
