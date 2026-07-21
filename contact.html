@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
 <head>
@@ -396,13 +396,18 @@
                      throw new Error('Supabase configuration is missing. Please add your API keys to contact.html');
                 }
                 
+                console.log('Attempting to insert into Supabase contact_inquiries:', formData);
+                
                 const { data, error } = await supabase
                     .from('contact_inquiries')
                     .insert([formData]);
+                    
+                console.log('Supabase insert response:', { data, error });
 
                 if (error) throw error;
 
                 // Success
+                console.log('Successfully inserted inquiry.');
                 toast.classList.remove('-translate-y-full');
                 document.getElementById('contactForm').reset();
                 
@@ -412,6 +417,10 @@
 
             } catch (err) {
                 console.error('Submission Error:', err);
+                
+                // Explicit alert for debugging any RLS or schema mismatch issues
+                alert("Supabase Submission Error: " + (err.message || JSON.stringify(err)));
+                
                 errorMsg.innerText = err.message || 'Please check your connection and try again.';
                 errorToast.classList.remove('-translate-y-full');
                 
