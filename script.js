@@ -105,6 +105,7 @@ let firstFrameLoaded = false;
 let currentFrame = 0;
 let targetFrame = 0;
 let lastRenderedFrame = -1;
+let isRendering = false;
 let selectedCategory = "ALL";
 let cart = [];
 
@@ -144,6 +145,7 @@ function preloadImages() {
     };
     
     img.onerror = () => {
+      console.error(`Failed to load frame ${i}: ${img.src}. Check paths or case sensitivity.`);
       loadedCount++;
     };
     
@@ -156,7 +158,10 @@ function onFirstImageLoaded() {
   resizeCanvas();
   updateTargetFrame();
   currentFrame = targetFrame;
-  requestAnimationFrame(renderLoop);
+  if (!isRendering) {
+    isRendering = true;
+    requestAnimationFrame(renderLoop);
+  }
 }
 
 // 2. Responsive Canvas Cover Fitting
@@ -192,6 +197,11 @@ function updateTargetFrame() {
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
   const scrollFraction = maxScroll <= 0 ? 0 : scrollY / maxScroll;
   targetFrame = scrollFraction * (frameCount - 1);
+  
+  if (!isRendering) {
+    isRendering = true;
+    requestAnimationFrame(renderLoop);
+  }
 }
 
 function renderLoop() {
@@ -207,7 +217,11 @@ function renderLoop() {
     lastRenderedFrame = roundedFrame;
   }
   
-  requestAnimationFrame(renderLoop);
+  if (Math.abs(targetFrame - currentFrame) > 0.01) {
+    requestAnimationFrame(renderLoop);
+  } else {
+    isRendering = false;
+  }
 }
 
 function resizeCanvas() {
