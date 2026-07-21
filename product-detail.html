@@ -255,11 +255,41 @@
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                        <!-- Review Summary -->
-                        <div class="reveal-up bg-darkBg p-8 border border-accent/15 rounded-2xl h-fit flex flex-col justify-center items-center text-center space-y-4" style="transition-delay: 0.1s;">
-                            <h3 id="review-score" class="font-serif text-6xl text-lightWarm">4.9</h3>
-                            <div class="flex text-accent text-xl" id="review-stars-summary"></div>
-                            <span id="review-total" class="text-[11px] font-sans text-[#a0a0a5] uppercase tracking-wider">Based on 1420 reviews</span>
+                        <!-- Review Summary & Form -->
+                        <div class="reveal-up lg:col-span-1 space-y-8" style="transition-delay: 0.1s;">
+                            <!-- Review Summary -->
+                            <div class="bg-darkBg p-8 border border-accent/15 rounded-2xl flex flex-col justify-center items-center text-center space-y-4">
+                                <h3 id="review-score" class="font-serif text-6xl text-lightWarm">4.9</h3>
+                                <div class="flex text-accent text-xl" id="review-stars-summary"></div>
+                                <span id="review-total" class="text-[11px] font-sans text-[#a0a0a5] uppercase tracking-wider">Based on 1420 reviews</span>
+                            </div>
+
+                            <!-- Write a Review Form -->
+                            <div class="bg-[#121214] p-6 border border-accent/15 rounded-2xl">
+                                <h4 class="text-[11px] font-bold tracking-[0.2em] text-lightWarm uppercase mb-4">Write a Review</h4>
+                                <form id="review-form" class="space-y-4">
+                                    <input type="text" id="review-name" required placeholder="Your Name" class="w-full bg-darkBg text-[#ECEAE6] px-4 py-3 text-[12px] tracking-wide placeholder-[#7C7167] focus:outline-none border border-accent/15 rounded">
+                                    
+                                    <div class="relative">
+                                        <select id="review-rating" required class="w-full bg-darkBg text-[#ECEAE6] px-4 py-3 text-[12px] tracking-wide focus:outline-none border border-accent/15 rounded appearance-none cursor-pointer">
+                                            <option value="" disabled selected>Select Rating</option>
+                                            <option value="5">★★★★★ - Perfect</option>
+                                            <option value="4">★★★★☆ - Great</option>
+                                            <option value="3">★★★☆☆ - Average</option>
+                                            <option value="2">★★☆☆☆ - Poor</option>
+                                            <option value="1">★☆☆☆☆ - Terrible</option>
+                                        </select>
+                                    </div>
+
+                                    <input type="text" id="review-title" required placeholder="Review Title" class="w-full bg-darkBg text-[#ECEAE6] px-4 py-3 text-[12px] tracking-wide placeholder-[#7C7167] focus:outline-none border border-accent/15 rounded">
+                                    
+                                    <textarea id="review-text" required placeholder="Share your thoughts..." rows="3" class="w-full bg-darkBg text-[#ECEAE6] px-4 py-3 text-[12px] tracking-wide placeholder-[#7C7167] focus:outline-none border border-accent/15 rounded resize-none"></textarea>
+                                    
+                                    <button type="submit" class="w-full bg-accent hover:bg-white text-darkBg text-[10px] font-bold tracking-[0.15em] uppercase py-3 transition-all duration-300 rounded">
+                                        Submit Review
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                         
                         <!-- Review List -->

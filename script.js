@@ -643,6 +643,113 @@ document.addEventListener('DOMContentLoaded', () => {
                 ScrollTrigger.refresh();
             }, 100);
 
+            // ----------------------------------------------------
+            // 8. Product Detail Page (PDP) Dynamic Rendering
+            // ----------------------------------------------------
+            if (document.getElementById('product-detail-page')) {
+                const params = new URLSearchParams(window.location.search);
+                const productId = params.get('id');
+                let product = products.find(p => p.id === productId);
+
+                // Fallback rendering
+                if (!product) {
+                    product = {
+                        id: "fallback-perfume",
+                        name: "L'Éternité Eau de Parfum",
+                        category: "Exclusive Collection",
+                        price: 295.00,
+                        rating: 4.8,
+                        reviewsCount: 312,
+                        image: "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                        description: "A masterful composition of rare botanicals and deep woods. Exudes elegance, depth, and a timeless aura. Hand-crafted in limited batches.",
+                        features: ["Top: White Bergamot, Iris", "Heart: Vetiver, Rose", "Base: Oud, Ambergris", "Volume: 100ml / 3.4 oz", "Endurance: 14+ hours"],
+                        images: [
+                            "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                            "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                            "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a"
+                        ]
+                    };
+                }
+
+                // Inject product details
+                document.getElementById('pd-name').textContent = product.name;
+                document.getElementById('pd-category').textContent = product.category;
+                document.getElementById('pd-price').textContent = `$${product.price.toFixed(2)}`;
+                document.getElementById('pd-description').textContent = product.description;
+                document.getElementById('pd-reviews-count').textContent = `(${product.reviewsCount} REVIEWS)`;
+                
+                const mainImage = document.getElementById('pd-main-image');
+                if (mainImage) mainImage.src = product.image;
+                
+                const starsContainer = document.getElementById('pd-stars');
+                if (starsContainer) {
+                    starsContainer.innerHTML = '★'.repeat(Math.floor(product.rating)) + '☆'.repeat(5 - Math.floor(product.rating));
+                }
+
+                const featuresList = document.getElementById('pd-features');
+                if (featuresList) {
+                    featuresList.innerHTML = product.features.map(f => `<li><span class="text-accent">•</span> ${f}</li>`).join('');
+                }
+
+                const thumbnailsContainer = document.getElementById('pd-thumbnails');
+                if (thumbnailsContainer && product.images) {
+                    thumbnailsContainer.innerHTML = product.images.map((img, idx) => `
+                        <div class="aspect-square bg-[#121214] rounded-lg overflow-hidden border ${idx === 0 ? 'border-accent' : 'border-accent/15'} cursor-pointer hover:border-accent/60 transition-colors pd-thumb-btn">
+                            <img src="${img}" class="w-full h-full object-cover">
+                        </div>
+                    `).join('');
+                    
+                    document.querySelectorAll('.pd-thumb-btn').forEach((btn, idx) => {
+                        btn.addEventListener('click', () => {
+                            mainImage.src = product.images[idx];
+                            document.querySelectorAll('.pd-thumb-btn').forEach(b => {
+                                b.classList.remove('border-accent');
+                                b.classList.add('border-accent/15');
+                            });
+                            btn.classList.add('border-accent');
+                            btn.classList.remove('border-accent/15');
+                        });
+                    });
+                }
+
+                // Handle Review Submission
+                const reviewForm = document.getElementById('review-form');
+                const reviewList = document.getElementById('pd-reviews-list');
+                if (reviewForm && reviewList) {
+                    reviewForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        const name = document.getElementById('review-name').value;
+                        const rating = document.getElementById('review-rating').value;
+                        const title = document.getElementById('review-title').value;
+                        const text = document.getElementById('review-text').value;
+
+                        const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                        
+                        const newReviewHTML = `
+                            <div class="bg-darkBg p-6 border border-accent/15 rounded-xl reveal-up is-visible">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h5 class="text-[13px] font-bold text-lightWarm tracking-wider">${name}</h5>
+                                        <div class="flex items-center space-x-2 mt-1">
+                                            <span class="text-accent text-[10px]">VERIFIED BUYER</span>
+                                            <span class="text-[#a0a0a5] text-[10px]">&bull; ${date}</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-accent text-sm">
+                                        ${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}
+                                    </div>
+                                </div>
+                                <h6 class="text-[12px] font-bold text-lightWarm mb-2 uppercase tracking-wide">${title}</h6>
+                                <p class="text-[12px] text-[#ECEAE6]/70 leading-relaxed font-sans">${text}</p>
+                            </div>
+                        `;
+                        
+                        reviewList.insertAdjacentHTML('afterbegin', newReviewHTML);
+                        reviewForm.reset();
+                    });
+                }
+            }
+
         });
 
 
