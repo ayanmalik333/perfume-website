@@ -102,11 +102,9 @@ const framePath = (index) => `./frames/${index.toString().padStart(4, '0')}.jpg`
 let animationFrames = new Array(frameCount);
 let loadedCount = 0;
 let firstFrameLoaded = false;
-let currentFrame = 0;
-let targetFrame = 0;
 let lastRenderedFrame = -1;
-let isRendering = false;
 let selectedCategory = "ALL";
+let frameConfig = { frame: 0 };
 let cart = [];
 
 // Elements
@@ -156,11 +154,35 @@ function preloadImages() {
 
 function onFirstImageLoaded() {
   resizeCanvas();
-  updateTargetFrame();
-  currentFrame = targetFrame;
-  if (!isRendering) {
-    isRendering = true;
-    requestAnimationFrame(renderLoop);
+  
+  // Draw initial frame
+  if (animationFrames[0]) {
+    drawImageCover(animationFrames[0]);
+    lastRenderedFrame = 0;
+  }
+
+  // Initialize GSAP ScrollTrigger
+  if (typeof gsap !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+    
+    gsap.to(frameConfig, {
+      frame: frameCount - 1,
+      snap: "frame",
+      ease: "none",
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.5 // Smooth scrubbing
+      },
+      onUpdate: () => {
+        const roundedFrame = Math.round(frameConfig.frame);
+        if (roundedFrame !== lastRenderedFrame && animationFrames[roundedFrame]) {
+          drawImageCover(animationFrames[roundedFrame]);
+          lastRenderedFrame = roundedFrame;
+        }
+      }
+    });
   }
 }
 
@@ -192,46 +214,14 @@ function drawImageCover(img) {
   ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
 }
 
-function updateTargetFrame() {
-  const scrollY = window.scrollY;
-  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-  const scrollFraction = maxScroll <= 0 ? 0 : scrollY / maxScroll;
-  targetFrame = scrollFraction * (frameCount - 1);
-  
-  if (!isRendering) {
-    isRendering = true;
-    requestAnimationFrame(renderLoop);
-  }
-}
-
-function renderLoop() {
-  currentFrame += (targetFrame - currentFrame) * ease;
-  if (currentFrame < 0) currentFrame = 0;
-  if (currentFrame > frameCount - 1) currentFrame = frameCount - 1;
-  
-  const roundedFrame = Math.round(currentFrame);
-  
-  if (roundedFrame !== lastRenderedFrame) {
-    const img = animationFrames[roundedFrame];
-    drawImageCover(img);
-    lastRenderedFrame = roundedFrame;
-  }
-  
-  if (Math.abs(targetFrame - currentFrame) > 0.01) {
-    requestAnimationFrame(renderLoop);
-  } else {
-    isRendering = false;
-  }
-}
-
 function resizeCanvas() {
   const dpr = window.devicePixelRatio || 1;
   canvas.width = window.innerWidth * dpr;
   canvas.height = window.innerHeight * dpr;
   
-  const roundedFrame = Math.round(currentFrame);
+  const roundedFrame = Math.round(frameConfig.frame);
   const img = animationFrames[roundedFrame];
-  drawImageCover(img);
+  if (img) drawImageCover(img);
 }
 
 // 3. UI Component Renderers
@@ -525,7 +515,6 @@ document.getElementById('newsletter-form').addEventListener('submit', (e) => {
 });
 
 // Window events
-window.addEventListener('scroll', updateTargetFrame, { passive: true });
 window.addEventListener('resize', resizeCanvas);
 
 // Kickstart Preload & Rendering
