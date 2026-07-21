@@ -221,7 +221,10 @@
                     e.preventDefault();
                     newsletterForm.classList.add('hidden');
                     document.getElementById('newsletter-success').classList.remove('hidden');
-                });
+                    // Register GSAP ScrollTrigger
+            gsap.registerPlugin(ScrollTrigger);
+
+        });
             }
 
             // Mobile menu toggle
@@ -236,7 +239,10 @@
                     mobileMenu.classList.toggle('hidden', !isHidden);
                     openIcon.classList.toggle('hidden', isHidden);
                     closeIcon.classList.toggle('hidden', !isHidden);
-                });
+                    // Register GSAP ScrollTrigger
+            gsap.registerPlugin(ScrollTrigger);
+
+        });
             }
 
             // Smooth scroll for hero button
@@ -244,7 +250,10 @@
             if (heroBtn) {
                 heroBtn.addEventListener('click', () => {
                     document.getElementById('best-sellers')?.scrollIntoView({ behavior: 'smooth' });
-                });
+                    // Register GSAP ScrollTrigger
+            gsap.registerPlugin(ScrollTrigger);
+
+        });
             }
 
             // ==========================================
@@ -358,5 +367,9 @@
                 preloadImages();
             }
 
+            // Register GSAP ScrollTrigger
+            gsap.registerPlugin(ScrollTrigger);
+
         });
+
 
