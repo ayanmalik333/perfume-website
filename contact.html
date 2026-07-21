@@ -348,8 +348,8 @@
     
     <script>
         // Supabase configuration - User should replace these with their actual keys
-        const supabaseUrl = 'YOUR_SUPABASE_URL';
-        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+        const supabaseUrl = 'https://ohgtcppbhmkqjkheuskv.supabase.co';
+        const supabaseKey = 'sb_publishable_L3vS2qNyjhgbx7rNf4-BVQ_jQSxTlHT';
         
         let supabase;
         try {
@@ -392,7 +392,7 @@
             errorToast.classList.add('-translate-y-full');
 
             try {
-                if(supabaseUrl === 'YOUR_SUPABASE_URL') {
+                if(false) {
                      throw new Error('Supabase configuration is missing. Please add your API keys to contact.html');
                 }
                 
@@ -428,3 +428,5 @@
     </script>
 </body>
 </html>
+
+
