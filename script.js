@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     // Set active nav link
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('nav a, #mobile-menu a').forEach(link => {
@@ -332,7 +332,14 @@
                     if (img) drawImageCover(img);
                 }
 
-                window.addEventListener("resize", resizeCanvas);
+                let resizeTimeout;
+                window.addEventListener("resize", () => {
+                    if (resizeTimeout) clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        resizeCanvas();
+                        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+                    }, 150);
+                });
 
                 if (typeof gsap !== 'undefined') {
                     gsap.to(frameConfig, {
@@ -390,7 +397,7 @@
                         gsap.from(section, {
                             scrollTrigger: {
                                 trigger: section,
-                                start: "top 85%",
+                                start: "top 90%",
                                 toggleActions: "play none none none"
                             },
                             opacity: 0,
@@ -402,7 +409,7 @@
                         gsap.from(grid.children, {
                             scrollTrigger: {
                                 trigger: grid,
-                                start: "top 85%",
+                                start: "top 90%",
                                 toggleActions: "play none none none"
                             },
                             opacity: 0,
@@ -416,7 +423,7 @@
                         gsap.from(section, {
                             scrollTrigger: {
                                 trigger: section,
-                                start: "top 85%",
+                                start: "top 90%",
                                 toggleActions: "play none none none"
                             },
                             opacity: 0,
@@ -435,6 +442,30 @@
 
 
 
-window.addEventListener('load', () => { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(); });
 
 
+
+
+
+window.addEventListener('load', () => { 
+    if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+    }
+});
+
+// Safety fallback: Ensure no sections remain permanently hidden if ScrollTrigger fails or network is slow
+setTimeout(() => {
+    const hiddenElements = document.querySelectorAll('section, footer, .grid > div, #product-grid > div');
+    hiddenElements.forEach(el => {
+        // Only force reveal if the element is currently invisible
+        if (window.getComputedStyle(el).opacity === '0') {
+            el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+        }
+    });
+    
+    if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+    }
+}, 1500);
