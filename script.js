@@ -391,11 +391,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             scrollTrigger: {
                                 trigger: section,
                                 start: "top 85%",
-                                toggleActions: "play none none reverse"
+                                toggleActions: "play none none none"
                             },
                             opacity: 0,
                             y: 30,
-                            duration: 0.8,
+                            duration: 0.6,
                             ease: "power2.out"
                         });
                         
@@ -403,25 +403,25 @@ document.addEventListener('DOMContentLoaded', () => {
                             scrollTrigger: {
                                 trigger: grid,
                                 start: "top 85%",
-                                toggleActions: "play none none reverse"
+                                toggleActions: "play none none none"
                             },
                             opacity: 0,
                             y: 50,
-                            duration: 0.8,
-                            stagger: 0.1,
+                            duration: 0.6,
+                            stagger: 0.08,
                             ease: "power2.out",
-                            delay: 0.2
+                            delay: 0.1
                         });
                     } else {
                         gsap.from(section, {
                             scrollTrigger: {
                                 trigger: section,
                                 start: "top 85%",
-                                toggleActions: "play none none reverse"
+                                toggleActions: "play none none none"
                             },
                             opacity: 0,
                             y: 50,
-                            duration: 0.8,
+                            duration: 0.6,
                             ease: "power2.out"
                         });
                     }
