@@ -4,13 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUXURY PERFUMES | The Art of Liquid Architecture</title>
+    <title>Product Details | LUXURY PERFUMES</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -50,13 +48,25 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #BFA37C;
         }
+
+        /* Native CSS Stagger Reveal Animations */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
+        }
+        
+        .reveal-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 
-<body
-    class="bg-darkBg text-lightWarm selection:bg-accent/20 selection:text-[#FAF9F6] font-sans antialiased overflow-x-hidden m-0 p-0">
+<body class="bg-darkBg text-lightWarm selection:bg-accent/20 selection:text-[#FAF9F6] font-sans antialiased overflow-x-hidden m-0 p-0">
 
-    <!-- Fixed fullscreen canvas container for scroll-based animation -->
+    <!-- Fixed fullscreen canvas container for background aesthetic -->
     <div id="canvas-container"
         style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;">
         <canvas id="hero-canvas" style="width: 100%; height: 100%; object-fit: cover;"></canvas>
@@ -73,12 +83,10 @@
                     <!-- Logo Section -->
                     <div class="flex-1 lg:flex-initial">
                         <a href="index.html" class="flex flex-col items-center group">
-                            <span
-                                class="font-serif text-2xl sm:text-3xl tracking-[0.2em] text-lightWarm transition-colors duration-300 group-hover:text-accent">
+                            <span class="font-serif text-2xl sm:text-3xl tracking-[0.2em] text-lightWarm transition-colors duration-300 group-hover:text-accent">
                                 LUXURY
                             </span>
-                            <span
-                                class="text-[9px] sm:text-[10px] tracking-[0.4em] text-accent font-medium -mt-1 font-sans">
+                            <span class="text-[9px] sm:text-[10px] tracking-[0.4em] text-accent font-medium -mt-1 font-sans">
                                 PERFUMES
                             </span>
                         </a>
@@ -86,38 +94,27 @@
 
                     <!-- Desktop Navigation Links -->
                     <nav class="hidden lg:flex space-x-10 xl:space-x-14">
-                        <a href="shop.html"
-                            class="text-[11px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm transition-colors duration-200 font-medium font-sans relative py-2 group">
+                        <a href="shop.html" class="text-[11px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm transition-colors duration-200 font-medium font-sans relative py-2 group">
                             SHOP
-                            <span
-                                class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full"></span>
+                            <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full"></span>
                         </a>
-                        <a href="collections.html"
-                            class="text-[11px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm transition-colors duration-200 font-medium font-sans relative py-2 group">
+                        <a href="collections.html" class="text-[11px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm transition-colors duration-200 font-medium font-sans relative py-2 group">
                             COLLECTIONS
-                            <span
-                                class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full"></span>
+                            <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full"></span>
                         </a>
-                        <a href="campaigns.html"
-                            class="text-[11px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm transition-colors duration-200 font-medium font-sans relative py-2 group">
+                        <a href="campaigns.html" class="text-[11px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm transition-colors duration-200 font-medium font-sans relative py-2 group">
                             CAMPAIGNS
-                            <span
-                                class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full"></span>
+                            <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full"></span>
                         </a>
-                        <a href="essence.html"
-                            class="text-[11px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm transition-colors duration-200 font-medium font-sans relative py-2 group">
+                        <a href="essence.html" class="text-[11px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm transition-colors duration-200 font-medium font-sans relative py-2 group">
                             OUR ESSENCE
-                            <span
-                                class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full"></span>
+                            <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full"></span>
                         </a>
-                        <a href="editorial.html"
-                            class="text-[11px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm transition-colors duration-200 font-medium font-sans relative py-2 group">
+                        <a href="editorial.html" class="text-[11px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm transition-colors duration-200 font-medium font-sans relative py-2 group">
                             EDITORIAL
-                            <span
-                                class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full"></span>
+                            <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full"></span>
                         </a>
-                        <a href="contact.html"
-                            class="text-[11px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm transition-colors duration-200 font-medium font-sans relative py-2 group">
+                        <a href="contact.html" class="text-[11px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm transition-colors duration-200 font-medium font-sans relative py-2 group">
                             CONTACT
                             <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-accent transition-all duration-300 group-hover:w-full"></span>
                         </a>
@@ -125,49 +122,35 @@
 
                     <!-- Action Icons -->
                     <div class="flex items-center space-x-4 sm:space-x-6">
-                        <button
-                            class="text-[#a0a0a5] hover:text-lightWarm p-1.5 transition-all duration-200 hover:scale-105"
-                            aria-label="Search" id="search-btn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                                class="w-5 h-5">
+                        <button class="text-[#a0a0a5] hover:text-lightWarm p-1.5 transition-all duration-200 hover:scale-105" aria-label="Search" id="search-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                         </button>
-                        <button
-                            class="text-[#a0a0a5] hover:text-lightWarm p-1.5 transition-all duration-200 hover:scale-105"
-                            aria-label="Account" id="account-btn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                                class="w-5 h-5">
+                        <button class="text-[#a0a0a5] hover:text-lightWarm p-1.5 transition-all duration-200 hover:scale-105" aria-label="Account" id="account-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
                         </button>
-                        <button
-                            class="text-[#a0a0a5] hover:text-lightWarm p-1.5 transition-all duration-200 relative hover:scale-105 group"
-                            aria-label="Shopping Cart" id="cart-btn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                                class="w-5 h-5">
+                        <button class="text-[#a0a0a5] hover:text-lightWarm p-1.5 transition-all duration-200 relative hover:scale-105 group" aria-label="Shopping Cart" id="cart-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5">
                                 <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                                 <line x1="3" y1="6" x2="21" y2="6"></line>
                                 <path d="M16 10a4 4 0 0 1-8 0"></path>
                             </svg>
-                            <span id="cart-badge"
-                                class="absolute -top-0.5 -right-0.5 bg-accent text-darkBg text-[9px] font-sans font-semibold rounded-full w-4 h-4 flex items-center justify-center border border-darkBg hidden">
+                            <span id="cart-badge" class="absolute -top-0.5 -right-0.5 bg-accent text-darkBg text-[9px] font-sans font-semibold rounded-full w-4 h-4 flex items-center justify-center border border-darkBg hidden">
                                 0
                             </span>
                         </button>
-                        <button
-                            class="lg:hidden text-[#a0a0a5] hover:text-lightWarm p-1.5 transition-colors duration-200"
-                            aria-label="Toggle Menu" id="mobile-menu-btn">
-                            <svg id="mobile-menu-open-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.5" class="w-6 h-6">
+                        <button class="lg:hidden text-[#a0a0a5] hover:text-lightWarm p-1.5 transition-colors duration-200" aria-label="Toggle Menu" id="mobile-menu-btn">
+                            <svg id="mobile-menu-open-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
                                 <line x1="3" y1="12" x2="21" y2="12"></line>
                                 <line x1="3" y1="6" x2="21" y2="6"></line>
                                 <line x1="3" y1="18" x2="21" y2="18"></line>
                             </svg>
-                            <svg id="mobile-menu-close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="1.5" class="w-6 h-6 hidden">
+                            <svg id="mobile-menu-close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6 hidden">
                                 <line x1="18" y1="6" x2="6" y2="18"></line>
                                 <line x1="6" y1="6" x2="18" y2="18"></line>
                             </svg>
@@ -175,29 +158,42 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Mobile Navigation Drawer -->
+            <div id="mobile-menu" class="lg:hidden hidden w-full bg-darkBg border-b border-accent/15 shadow-md">
+                <div class="px-4 py-6 space-y-4">
+                    <a href="shop.html" class="mobile-nav-link block text-[12px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm hover:bg-accent/10 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium">SHOP</a>
+                    <a href="collections.html" class="mobile-nav-link block text-[12px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm hover:bg-accent/10 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium">COLLECTIONS</a>
+                    <a href="campaigns.html" class="mobile-nav-link block text-[12px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm hover:bg-accent/10 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium">CAMPAIGNS</a>
+                    <a href="essence.html" class="mobile-nav-link block text-[12px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm hover:bg-accent/10 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium">OUR ESSENCE</a>
+                    <a href="editorial.html" class="mobile-nav-link block text-[12px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm hover:bg-accent/10 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium">EDITORIAL</a>
+                    <a href="contact.html" class="mobile-nav-link block text-[12px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm hover:bg-accent/10 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium">CONTACT</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Product Content Block with Unified Blur -->
         <main class="flex-grow pt-32 pb-24 bg-[#050505]/80 backdrop-blur-md relative z-10" id="product-detail-page">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
-                <!-- Main Grid -->
+                <!-- Main Grid - Completely unpinned standard flow -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
                     
-                    <!-- Left: Gallery -->
-                    <div id="gallery-container">
-                        <div class="space-y-4" id="gallery-pin-target">
-                            <!-- Main Image -->
-                            <div class="aspect-[4/5] bg-[#121214] rounded-2xl overflow-hidden border border-accent/15 flex items-center justify-center p-4 relative group">
-                                <img id="pd-main-image" src="" alt="Product Image" class="w-full h-full object-cover rounded-xl transition-transform duration-700 group-hover:scale-105">
-                            </div>
-                            
-                            <!-- Thumbnails -->
-                            <div class="grid grid-cols-3 sm:grid-cols-4 gap-3" id="pd-thumbnails">
-                                <!-- Thumbnails populated by JS -->
-                            </div>
+                    <!-- Left: Gallery Viewer -->
+                    <div class="reveal-up space-y-4" id="gallery-container">
+                        <!-- Main Image -->
+                        <div class="aspect-[4/5] bg-[#121214] rounded-2xl overflow-hidden border border-accent/15 flex items-center justify-center p-4 relative group">
+                            <img id="pd-main-image" src="" alt="Product Image" class="w-full h-full object-cover rounded-xl transition-transform duration-700 group-hover:scale-105">
+                        </div>
+                        
+                        <!-- Thumbnails -->
+                        <div class="grid grid-cols-3 sm:grid-cols-4 gap-3" id="pd-thumbnails">
+                            <!-- Thumbnails populated by JS -->
                         </div>
                     </div>
 
-                    <!-- Right: Info -->
-                    <div class="space-y-8 lg:pl-10 mt-10 lg:mt-0 pb-16">
+                    <!-- Right: Info Panel -->
+                    <div class="reveal-up space-y-8 lg:pl-10 mt-10 lg:mt-0 pb-16" style="transition-delay: 0.1s;">
                         <!-- Category & Title -->
                         <div class="space-y-3">
                             <span id="pd-category" class="text-[10px] font-sans font-bold tracking-[0.25em] text-accent uppercase"></span>
@@ -253,21 +249,21 @@
                 
                 <!-- Reviews Section -->
                 <div class="mt-32 border-t border-accent/15 pt-20" id="reviews-section">
-                    <div class="text-center mb-16">
+                    <div class="reveal-up text-center mb-16">
                         <span class="text-[10px] font-sans font-bold tracking-[0.25em] text-accent uppercase">Client Experiences</span>
                         <h2 class="font-serif text-3xl sm:text-4xl text-lightWarm mt-3">Verified Reviews</h2>
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                         <!-- Review Summary -->
-                        <div class="bg-darkBg p-8 border border-accent/15 rounded-2xl h-fit flex flex-col justify-center items-center text-center space-y-4">
+                        <div class="reveal-up bg-darkBg p-8 border border-accent/15 rounded-2xl h-fit flex flex-col justify-center items-center text-center space-y-4" style="transition-delay: 0.1s;">
                             <h3 id="review-score" class="font-serif text-6xl text-lightWarm">4.9</h3>
                             <div class="flex text-accent text-xl" id="review-stars-summary"></div>
                             <span id="review-total" class="text-[11px] font-sans text-[#a0a0a5] uppercase tracking-wider">Based on 1420 reviews</span>
                         </div>
                         
                         <!-- Review List -->
-                        <div class="lg:col-span-2 space-y-6" id="pd-reviews-list">
+                        <div class="reveal-up lg:col-span-2 space-y-6" id="pd-reviews-list" style="transition-delay: 0.2s;">
                             <!-- Populated by JS -->
                         </div>
                     </div>
@@ -275,45 +271,12 @@
 
             </div>
         </main>
-                    <a href="essence.html"
-                        class="mobile-nav-link block text-[12px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm hover:bg-accent/10 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium">OUR
-                        ESSENCE</a>
-                    <a href="editorial.html"
-                        class="mobile-nav-link block text-[12px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm hover:bg-accent/10 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium">EDITORIAL</a>
-                    <a href="contact.html"
-                        class="mobile-nav-link block text-[12px] tracking-[0.2em] text-[#a0a0a5] hover:text-lightWarm hover:bg-accent/10 px-3 py-2.5 rounded-lg transition-all duration-200 font-medium">CONTACT</a>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main content blocks -->
-                <main class="flex-grow">
-            <section class="relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24">
-<div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/90 pointer-events-none z-0"></div>
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <span class="text-[11px] sm:text-[12px] font-sans font-semibold tracking-[0.3em] text-accent uppercase block mb-4">THE VAULT</span>
-                    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl text-lightWarm leading-[1.12] tracking-tight">All Essences</h1>
-                    <p class="font-sans text-[15px] text-[#c0c0c5] mt-6 max-w-xl mx-auto font-light">Explore our complete collection of artisanal fragrances, hand-crafted with rare global botanicals.</p>
-                </div>
-            </section>
-            
-            <section class="py-12 bg-darkBg/30 backdrop-blur-sm border-t border-accent/15">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div id="category-bar" class="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-4 items-center mb-16"></div>
-                    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
-                        <!-- Dynamic Products -->
-                    </div>
-                </div>
-            </section>
-        </main>
 
         <!-- Footer Section -->
-        <footer id="about"
-            class="bg-[#050505]/40 backdrop-blur-sm text-[#ECEAE6] pt-16 pb-12 font-sans border-t border-accent/15">
+        <footer id="about" class="bg-[#050505]/40 backdrop-blur-sm text-[#ECEAE6] pt-16 pb-12 font-sans border-t border-accent/15">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 md:gap-8 pb-12 border-b border-lightWarm/10 text-left">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 md:gap-8 pb-12 border-b border-lightWarm/10 text-left">
 
                     <!-- Newsletter Signup -->
                     <div class="lg:col-span-4 space-y-4">
@@ -321,8 +284,7 @@
                             SUBSCRIBE TO THE SCENT
                         </h4>
                         <p class="text-[12px] text-[#ECEAE6]/80 max-w-sm">
-                            Receive exclusive invitations to private launches, artisanal campaigns & olfactory
-                            narratives.
+                            Receive exclusive invitations to private launches, artisanal campaigns & olfactory narratives.
                         </p>
 
                         <div id="newsletter-form-container">
@@ -348,57 +310,40 @@
                         <div class="space-y-4">
                             <h4 class="text-[11px] font-bold tracking-[0.2em] text-accent uppercase">CONCIERGE</h4>
                             <ul class="space-y-2.5 text-[12px] text-[#ECEAE6]/70">
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Private
-                                        Consultations</a></li>
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Shipping &
-                                        Care</a></li>
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Bespoke
-                                        Exchanges</a></li>
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Contact Us</a>
-                                </li>
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Boutique
-                                        Locator</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Private Consultations</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Shipping & Care</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Bespoke Exchanges</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Contact Us</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Boutique Locator</a></li>
                             </ul>
                         </div>
                         <div class="space-y-4">
                             <h4 class="text-[11px] font-bold tracking-[0.2em] text-accent uppercase">THE ESSENCE</h4>
                             <ul class="space-y-2.5 text-[12px] text-[#ECEAE6]/70">
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Our Heritage</a>
-                                </li>
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Artisanal
-                                        Oils</a></li>
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Eco-Conscious
-                                        Glass</a></li>
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Creative
-                                        Director</a></li>
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">House
-                                        Editorial</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Our Heritage</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Artisanal Oils</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Eco-Conscious Glass</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Creative Director</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">House Editorial</a></li>
                             </ul>
                         </div>
                         <div class="space-y-4">
                             <h4 class="text-[11px] font-bold tracking-[0.2em] text-accent uppercase">MEMBERSHIP</h4>
                             <ul class="space-y-2.5 text-[12px] text-[#ECEAE6]/70">
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Scent Vault
-                                        Account</a></li>
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Orders &
-                                        Reserves</a></li>
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Vault
-                                        Wishlist</a></li>
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Exclusive
-                                        Benefits</a></li>
-                                <li><a href="#" class="hover:text-white transition-colors duration-150">Bespoke Gift
-                                        Cards</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Scent Vault Account</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Orders & Reserves</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Vault Wishlist</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Exclusive Benefits</a></li>
+                                <li><a href="#" class="hover:text-white transition-colors duration-150">Bespoke Gift Cards</a></li>
                             </ul>
                         </div>
                     </div>
 
                     <!-- Brand Identity -->
-                    <div
-                        class="lg:col-span-3 flex flex-col justify-between items-start md:items-end lg:items-end space-y-6 md:space-y-0 text-left md:text-right">
+                    <div class="lg:col-span-3 flex flex-col justify-between items-start md:items-end lg:items-end space-y-6 md:space-y-0 text-left md:text-right">
                         <div class="flex flex-col items-start md:items-end">
                             <span class="font-serif text-3xl sm:text-4xl tracking-[0.2em] text-white">LUXURY</span>
-                            <span
-                                class="text-[10px] sm:text-[11px] tracking-[0.4em] text-accent font-medium -mt-1 uppercase">PERFUMES</span>
+                            <span class="text-[10px] sm:text-[11px] tracking-[0.4em] text-accent font-medium -mt-1 uppercase">PERFUMES</span>
                         </div>
                         <div class="text-[11px] text-[#ECEAE6]/60">
                             <p>© 2026 Luxury Perfumes. All Rights Reserved.</p>
@@ -408,8 +353,7 @@
                 </div>
 
                 <!-- Bottom credits -->
-                <div
-                    class="pt-6 flex flex-col sm:flex-row justify-between items-center text-[10px] text-[#ECEAE6]/50 space-y-2 sm:space-y-0">
+                <div class="pt-6 flex flex-col sm:flex-row justify-between items-center text-[10px] text-[#ECEAE6]/50 space-y-2 sm:space-y-0">
                     <p>Hand-crafted extractions formulated from elite botanical reserves.</p>
                     <div class="flex space-x-4">
                         <a href="#privacy" class="hover:underline">Privacy Policy</a>
@@ -430,23 +374,19 @@
 
         <!-- Slide-over panel -->
         <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
-            <div id="cart-panel"
-                class="w-screen max-w-md bg-[#FAF9F6] shadow-2xl flex flex-col h-full border-l border-accent/15 transform translate-x-full transition-transform duration-300 ease-out">
+            <div id="cart-panel" class="w-screen max-w-md bg-[#FAF9F6] shadow-2xl flex flex-col h-full border-l border-accent/15 transform translate-x-full transition-transform duration-300 ease-out">
 
                 <!-- Drawer Header -->
                 <div class="px-6 py-5 border-b border-accent/15 flex items-center justify-between bg-white text-darkBg">
                     <h2 class="text-[13px] font-bold tracking-[0.2em] uppercase flex items-center">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                            class="w-4 h-4 mr-2 text-accent">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-4 h-4 mr-2 text-accent">
                             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                             <line x1="3" y1="6" x2="21" y2="6"></line>
                             <path d="M16 10a4 4 0 0 1-8 0"></path>
                         </svg>
                         SCENT VAULT (<span id="cart-drawer-count">0</span>)
                     </h2>
-                    <button id="close-cart-btn"
-                        class="text-[#4A443F] hover:text-darkBg p-1.5 rounded-full hover:bg-accent/10 transition-colors"
-                        aria-label="Close Cart">
+                    <button id="close-cart-btn" class="text-[#4A443F] hover:text-darkBg p-1.5 rounded-full hover:bg-accent/10 transition-colors" aria-label="Close Cart">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -467,15 +407,12 @@
                             <span id="shipping-amount-text" class="font-bold text-darkBg">$100.00 away</span>
                         </div>
                         <div class="w-full bg-[#FAF9F6] h-1.5 rounded-full overflow-hidden border border-accent/10">
-                            <div id="shipping-progress-bar"
-                                class="bg-accent h-full rounded-full transition-all duration-500 ease-out"
-                                style="width: 0%"></div>
+                            <div id="shipping-progress-bar" class="bg-accent h-full rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
                         </div>
                     </div>
 
                     <div class="flex justify-between items-baseline pt-2">
-                        <span class="text-[11px] tracking-[0.15em] text-[#5C534C] uppercase font-semibold">RESERVED
-                            TOTAL</span>
+                        <span class="text-[11px] tracking-[0.15em] text-[#5C534C] uppercase font-semibold">RESERVED TOTAL</span>
                         <span id="cart-subtotal" class="text-[18px] font-serif font-bold text-darkBg">$0.00</span>
                     </div>
 
@@ -484,8 +421,7 @@
                     </p>
 
                     <div class="pt-2">
-                        <button id="checkout-btn"
-                            class="w-full bg-darkBg hover:bg-accent text-white hover:text-darkBg text-[11px] font-sans font-bold tracking-[0.2em] uppercase py-4 transition-all duration-300 shadow-md hover:shadow-lg active:scale-98">
+                        <button id="checkout-btn" class="w-full bg-darkBg hover:bg-accent text-white hover:text-darkBg text-[11px] font-sans font-bold tracking-[0.2em] uppercase py-4 transition-all duration-300 shadow-md hover:shadow-lg active:scale-98">
                             PROCEED TO PURCHASE
                         </button>
                     </div>
@@ -495,7 +431,33 @@
         </div>
     </div>
 
-    <!-- Complete Integrated Dynamic & Scroll Animation Script -->
+    <!-- Complete Integrated Dynamic Data & Utilities Script -->
     <script src="script.js" defer></script>
+
+    <!-- Specific Pure Native CSS Reveal Script (No GSAP) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup Intersection Observer for elements with '.reveal-up' class
+            const revealOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Reveal only once
+                    }
+                });
+            }, revealOptions);
+
+            // Give dynamic data injection a moment to run before observing
+            setTimeout(() => {
+                document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
+            }, 300);
+        });
+    </script>
 </body>
+
 </html>
