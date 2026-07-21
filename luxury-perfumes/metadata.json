@@ -1,0 +1,6 @@
+{
+  "name": "Luxury Perfumes",
+  "description": "An elegant, highly-polished, responsive e-commerce landing page for Luxury Perfumes, featuring bespoke fragrances, artisanal ingredients, glowing testimonial reviews, and an ultra-premium dark luxury aesthetic.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
