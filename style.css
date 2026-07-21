@@ -5,11 +5,13 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0d0d0d; /* Dark charcoal */
+  background: #0d0d0d;
+  /* Dark charcoal */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #C5A880; /* Premium gold accent */
+  background: #C5A880;
+  /* Premium gold accent */
   border-radius: 4px;
 }
 
@@ -17,21 +19,41 @@
   background: #BFA37C;
 }
 
-/* Base Styles */
-html, body {
+/* Base Styles - Cleaned up overflow issues */
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
   background-color: transparent;
   color: #FAF9F6;
   font-family: "Plus Jakarta Sans", "Inter", sans-serif;
-  overflow-x: hidden;
-  min-height: 100vh;
+  min-height: 100%;
   margin: 0;
   padding: 0;
+  /* Removed overflow-x: hidden from here to prevent breaking ScrollTrigger/IntersectionObserver */
+}
+
+/* Page Wrapper for safe horizontal overflow handling */
+#root,
+.main-wrapper,
+main {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Custom transitions and animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fadeIn {
@@ -44,6 +66,7 @@ html, body {
 }
 
 /* Lock scroll when cart or loader is active */
-.no-scroll {
-  overflow: hidden;
+body.no-scroll {
+  overflow: hidden !important;
+  height: 100vh;
 }
