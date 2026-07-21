@@ -377,6 +377,17 @@
             btnLoader.classList.remove('hidden');
 
             try {
+                // Diagnostic 1: Local Key Format Audit
+                if (!supabaseKey.startsWith('eyJ')) {
+                    throw new Error(
+                        "CRITICAL CONFIGURATION ERROR:\n\n" +
+                        "The Supabase Anon Key provided is invalid.\n" +
+                        "Current Key: " + supabaseKey.substring(0, 15) + "...\n\n" +
+                        "Supabase Data API keys MUST be JWTs starting with 'eyJ'. It looks like you may have copied a publishable key for a different service, or Supabase has updated their format and requires the specific Data API JWT.\n\n" +
+                        "Please go to Supabase Dashboard -> Project Settings -> API and copy the 'anon' 'public' key (the long one starting with eyJ)."
+                    );
+                }
+                
                 console.log('Attempting REST POST to:', restEndpoint);
                 console.log('Payload:', formData);
                 
