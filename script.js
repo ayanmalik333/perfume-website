@@ -110,7 +110,7 @@ let selectedCategory = "ALL";
 let cart = [];
 
 // Elements
-const canvas = document.getElementById('animation-canvas');
+const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
 const categoryBar = document.getElementById('category-bar');
 const productGrid = document.getElementById('product-grid');

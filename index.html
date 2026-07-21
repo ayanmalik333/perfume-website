@@ -31,16 +31,18 @@
     </script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-transparent text-lightWarm selection:bg-accent/20 selection:text-[#FAF9F6] font-sans antialiased overflow-x-hidden m-0 p-0">
+<body class="bg-darkBg text-lightWarm selection:bg-accent/20 selection:text-[#FAF9F6] font-sans antialiased overflow-x-hidden m-0 p-0">
 
-    <!-- Fixed fullscreen canvas for rendering the scroll animation in the background -->
-    <canvas id="animation-canvas"></canvas>
+    <!-- Fixed fullscreen canvas container -->
+    <div id="canvas-container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none;">
+        <canvas id="hero-canvas" style="width: 100%; height: 100%; object-fit: cover;"></canvas>
+    </div>
 
     <!-- Page Content Container -->
-    <div class="relative z-10 w-full flex flex-col min-h-screen m-0 p-0">
+    <div class="relative w-full flex flex-col min-h-screen m-0 p-0" style="position: relative; z-index: 1;">
         
         <!-- Navigation Header -->
-        <header class="sticky top-0 z-40 bg-darkBg/60 backdrop-blur-md border-b border-accent/15 m-0">
+        <header class="sticky top-0 bg-darkBg/60 backdrop-blur-md border-b border-accent/15 m-0" style="margin-top: 0 !important; top: 0 !important; z-index: 40;">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-20">
                     
