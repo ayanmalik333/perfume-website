@@ -96,11 +96,12 @@ const socialImages = [
 // Configuration for Animation
 const frameCount = 240;
 const ease = 0.08; 
-const framePath = (index) => `frames/${index.toString().padStart(4, '0')}.jpg`;
+const framePath = (index) => `./frames/${index.toString().padStart(4, '0')}.jpg`;
 
 // State Variables
-let animationFrames = [];
+let animationFrames = new Array(frameCount);
 let loadedCount = 0;
+let firstFrameLoaded = false;
 let currentFrame = 0;
 let targetFrame = 0;
 let lastRenderedFrame = -1;
@@ -133,25 +134,25 @@ const mobileMenuCloseIcon = document.getElementById('mobile-menu-close-icon');
 function preloadImages() {
   for (let i = 1; i <= frameCount; i++) {
     const img = new Image();
+    
     img.onload = () => {
       loadedCount++;
-
-      if (loadedCount === frameCount) {
-        onAllImagesLoaded();
+      if (i === 1 && !firstFrameLoaded) {
+        firstFrameLoaded = true;
+        onFirstImageLoaded();
       }
     };
+    
     img.onerror = () => {
       loadedCount++;
-      if (loadedCount === frameCount) {
-        onAllImagesLoaded();
-      }
     };
+    
     img.src = framePath(i);
-    animationFrames.push(img);
+    animationFrames[i - 1] = img;
   }
 }
 
-function onAllImagesLoaded() {
+function onFirstImageLoaded() {
   resizeCanvas();
   updateTargetFrame();
   currentFrame = targetFrame;
@@ -160,7 +161,7 @@ function onAllImagesLoaded() {
 
 // 2. Responsive Canvas Cover Fitting
 function drawImageCover(img) {
-  if (!img) return;
+  if (!img || !img.complete || img.naturalWidth === 0) return;
   const dpr = window.devicePixelRatio || 1;
   const canvasWidth = canvas.width;
   const canvasHeight = canvas.height;
