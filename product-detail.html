@@ -182,7 +182,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
                     
                     <!-- Left: Gallery -->
-                    <div class="g-frame-reveal" id="gallery-container">
+                    <div id="gallery-container">
                         <div class="space-y-4" id="gallery-pin-target">
                             <!-- Main Image -->
                             <div class="aspect-[4/5] bg-[#121214] rounded-2xl overflow-hidden border border-accent/15 flex items-center justify-center p-4 relative group">
@@ -197,7 +197,7 @@
                     </div>
 
                     <!-- Right: Info -->
-                    <div class="g-frame-reveal pt-4 lg:pt-8 flex flex-col justify-start">
+                    <div class="space-y-8 lg:pl-10 mt-10 lg:mt-0 pb-16">
                         <!-- Category & Title -->
                         <div class="space-y-3">
                             <span id="pd-category" class="text-[10px] font-sans font-bold tracking-[0.25em] text-accent uppercase"></span>
@@ -253,21 +253,21 @@
                 
                 <!-- Reviews Section -->
                 <div class="mt-32 border-t border-accent/15 pt-20" id="reviews-section">
-                    <div class="text-center mb-16 g-frame-reveal">
+                    <div class="text-center mb-16">
                         <span class="text-[10px] font-sans font-bold tracking-[0.25em] text-accent uppercase">Client Experiences</span>
                         <h2 class="font-serif text-3xl sm:text-4xl text-lightWarm mt-3">Verified Reviews</h2>
                     </div>
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 g-frame-reveal">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                         <!-- Review Summary -->
-                        <div class="lg:col-span-1 bg-[#121214] border border-accent/15 rounded-2xl p-8 flex flex-col justify-center items-center text-center space-y-4">
+                        <div class="bg-darkBg p-8 border border-accent/15 rounded-2xl h-fit flex flex-col justify-center items-center text-center space-y-4">
                             <h3 id="review-score" class="font-serif text-6xl text-lightWarm">4.9</h3>
                             <div class="flex text-accent text-xl" id="review-stars-summary"></div>
                             <span id="review-total" class="text-[11px] font-sans text-[#a0a0a5] uppercase tracking-wider">Based on 1420 reviews</span>
                         </div>
                         
                         <!-- Review List -->
-                        <div class="lg:col-span-2 space-y-4" id="pd-reviews-list">
+                        <div class="lg:col-span-2 space-y-6" id="pd-reviews-list">
                             <!-- Populated by JS -->
                         </div>
                     </div>
@@ -338,7 +338,7 @@
                             </form>
                             <div id="newsletter-success"
                                 class="bg-accent/10 border border-accent/20 p-3 rounded text-[12px] text-accent hidden">
-                                Ã¢Å“Â¨ Entrusted. You've entered our inner circle.
+                                ✨ Entrusted. You've entered our inner circle.
                             </div>
                         </div>
                     </div>
@@ -401,7 +401,7 @@
                                 class="text-[10px] sm:text-[11px] tracking-[0.4em] text-accent font-medium -mt-1 uppercase">PERFUMES</span>
                         </div>
                         <div class="text-[11px] text-[#ECEAE6]/60">
-                            <p>Ã‚&copy; 2026 Luxury Perfumes. All Rights Reserved.</p>
+                            <p>© 2026 Luxury Perfumes. All Rights Reserved.</p>
                         </div>
                     </div>
 
@@ -495,52 +495,7 @@
         </div>
     </div>
 
-    <!-- GSAP & ScrollTrigger Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
     <!-- Complete Integrated Dynamic & Scroll Animation Script -->
     <script src="script.js" defer></script>
-
-    <!-- Specific GSAP ScrollTrigger Logic for Product Details Page -->
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            // Give script.js time to inject dynamic content
-            setTimeout(() => {
-                gsap.registerPlugin(ScrollTrigger);
-
-                // 1. (REMOVED) Pinning logic was removed to enable natural scrolling.
-
-                // 2. Bottom-to-Top Stagger Reveals for PDP specific elements
-                const pRevealElements = document.querySelectorAll('.g-frame-reveal');
-                pRevealElements.forEach((el, i) => {
-                    gsap.fromTo(el, {
-                        opacity: 0,
-                        y: 45
-                    }, {
-                        scrollTrigger: {
-                            trigger: el,
-                            start: "top 85%",
-                            toggleActions: "play none none none"
-                        },
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.7,
-                        ease: "power2.out",
-                        delay: i * 0.1,
-                        clearProps: "all"
-                    });
-                });
-
-                // 3. Force GSAP recalculation now that dynamic product data/images are in the DOM
-                ScrollTrigger.refresh();
-                
-            }, 600); // 600ms delay ensures script.js products are injected and images begin loading
-        });
-    </script>
 </body>
-
-
-
-
-
+</html>

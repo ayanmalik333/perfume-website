@@ -557,7 +557,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Register GSAP ScrollTrigger
-            gsap.registerPlugin(ScrollTrigger);
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+            }
 
             // ----------------------------------------------------
             // 7. Transparent Header Scroll & GSAP Scroll Reveals
@@ -579,6 +581,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Global Scroll Reveal Animations (Bottom to Top)
             setTimeout(() => {
+                if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+                
                 const revealSections = document.querySelectorAll('section:not(#hero), footer');
                 
                 revealSections.forEach(section => {
