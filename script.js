@@ -136,14 +136,15 @@ function preloadImages() {
     
     img.onload = () => {
       loadedCount++;
-      if (i === 1 && !firstFrameLoaded) {
+      // Trigger first draw when any frame loads if not already triggered
+      if (!firstFrameLoaded) {
         firstFrameLoaded = true;
         onFirstImageLoaded();
       }
     };
     
     img.onerror = () => {
-      console.error(`Failed to load frame ${i}: ${img.src}. Check paths or case sensitivity.`);
+      console.error(`Failed to load frame ${i}: ${img.src}`);
       loadedCount++;
     };
     
@@ -154,36 +155,36 @@ function preloadImages() {
 
 function onFirstImageLoaded() {
   resizeCanvas();
-  
-  // Draw initial frame
-  if (animationFrames[0]) {
-    drawImageCover(animationFrames[0]);
-    lastRenderedFrame = 0;
+  // Draw the current frame based on scroll position immediately
+  const initialFrame = Math.round(frameConfig.frame);
+  if (animationFrames[initialFrame] && animationFrames[initialFrame].complete) {
+    drawImageCover(animationFrames[initialFrame]);
+    lastRenderedFrame = initialFrame;
   }
+}
 
-  // Initialize GSAP ScrollTrigger
-  if (typeof gsap !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-    
-    gsap.to(frameConfig, {
-      frame: frameCount - 1,
-      snap: "frame",
-      ease: "none",
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.5 // Smooth scrubbing
-      },
-      onUpdate: () => {
-        const roundedFrame = Math.round(frameConfig.frame);
-        if (roundedFrame !== lastRenderedFrame && animationFrames[roundedFrame]) {
-          drawImageCover(animationFrames[roundedFrame]);
-          lastRenderedFrame = roundedFrame;
-        }
+// Initialize GSAP immediately so it maps to scroll even if images are slow
+if (typeof gsap !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+  
+  gsap.to(frameConfig, {
+    frame: frameCount - 1,
+    snap: "frame",
+    ease: "none",
+    scrollTrigger: {
+      trigger: "body",
+      start: "top top",
+      end: "bottom bottom",
+      scrub: 0.5
+    },
+    onUpdate: () => {
+      const roundedFrame = Math.round(frameConfig.frame);
+      if (roundedFrame !== lastRenderedFrame && animationFrames[roundedFrame] && animationFrames[roundedFrame].complete) {
+        drawImageCover(animationFrames[roundedFrame]);
+        lastRenderedFrame = roundedFrame;
       }
-    });
-  }
+    }
+  });
 }
 
 // 2. Responsive Canvas Cover Fitting
