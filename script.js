@@ -248,152 +248,115 @@
             }
 
             // ==========================================
-            // 4. CANVAS SCROLL-BASED ANIMATION ENGINE
+            // 4. GSAP SCROLL-BASED FRAME ANIMATION
             // ==========================================
+            const frameCount = 240;
+            const ease = 0.08; 
+            const framePath = (index) => `./frames/${index.toString().padStart(4, '0')}.jpg`;
+
+            let animationFrames = new Array(frameCount);
+            let loadedCount = 0;
+            let firstFrameLoaded = false;
+            let lastRenderedFrame = -1;
+            let frameConfig = { frame: 0 };
+
             const canvas = document.getElementById("hero-canvas");
             if (canvas) {
                 const ctx = canvas.getContext("2d");
 
+                // 1. Image Preloading
+                function preloadImages() {
+                    for (let i = 1; i <= frameCount; i++) {
+                        const img = new Image();
+                        
+                        img.onload = () => {
+                            loadedCount++;
+                            if (!firstFrameLoaded) {
+                                firstFrameLoaded = true;
+                                onFirstImageLoaded();
+                            }
+                        };
+                        
+                        img.onerror = () => {
+                            console.error(`Failed to load frame ${i}: ${img.src}`);
+                            loadedCount++;
+                        };
+                        
+                        img.src = framePath(i);
+                        animationFrames[i - 1] = img;
+                    }
+                }
+
+                function onFirstImageLoaded() {
+                    resizeCanvas();
+                    const initialFrame = Math.round(frameConfig.frame);
+                    if (animationFrames[initialFrame] && animationFrames[initialFrame].complete) {
+                        drawImageCover(animationFrames[initialFrame]);
+                        lastRenderedFrame = initialFrame;
+                    }
+                }
+
+                // 2. Responsive Canvas Cover Fitting
+                function drawImageCover(img) {
+                    if (!img || !img.complete || img.naturalWidth === 0) return;
+                    const canvasWidth = canvas.width;
+                    const canvasHeight = canvas.height;
+                    
+                    const canvasRatio = canvasWidth / canvasHeight;
+                    const imgRatio = img.naturalWidth / img.naturalHeight;
+                    
+                    let drawWidth, drawHeight, offsetX, offsetY;
+
+                    if (canvasRatio > imgRatio) {
+                        drawWidth = canvasWidth;
+                        drawHeight = canvasWidth / imgRatio;
+                        offsetX = 0;
+                        offsetY = (canvasHeight - drawHeight) / 2;
+                    } else {
+                        drawWidth = canvasHeight * imgRatio;
+                        drawHeight = canvasHeight;
+                        offsetX = (canvasWidth - drawWidth) / 2;
+                        offsetY = 0;
+                    }
+
+                    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                    ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+                }
+
                 function resizeCanvas() {
                     canvas.width = window.innerWidth;
                     canvas.height = window.innerHeight;
+                    
+                    const roundedFrame = Math.round(frameConfig.frame);
+                    const img = animationFrames[roundedFrame];
+                    if (img) drawImageCover(img);
                 }
-                resizeCanvas();
+
                 window.addEventListener("resize", resizeCanvas);
 
-                // Create luxury particle objects for 3D depth simulation
-                const particles = [];
-                const particleCount = 140;
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push({
-                        x: Math.random() * window.innerWidth,
-                        y: Math.random() * window.innerHeight,
-                        z: Math.random() * 2 + 0.5,
-                        radius: Math.random() * 2.5 + 0.5,
-                        baseAlpha: Math.random() * 0.6 + 0.2,
-                        speedY: (Math.random() - 0.5) * 0.4,
-                        goldTone: Math.random() > 0.4 ? '#C5A880' : '#E5D9D3'
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(frameConfig, {
+                        frame: frameCount - 1,
+                        snap: "frame",
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: "body",
+                            start: "top top",
+                            end: "bottom bottom",
+                            scrub: 0.5
+                        },
+                        onUpdate: () => {
+                            const roundedFrame = Math.round(frameConfig.frame);
+                            if (roundedFrame !== lastRenderedFrame && animationFrames[roundedFrame] && animationFrames[roundedFrame].complete) {
+                                drawImageCover(animationFrames[roundedFrame]);
+                                lastRenderedFrame = roundedFrame;
+                            }
+                        }
                     });
                 }
 
-                // Scroll progress tracker
-                const scrollState = { progress: 0 };
-
-                gsap.to(scrollState, {
-                    progress: 1,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: "body",
-                        start: "top top",
-                        end: "bottom bottom",
-                        scrub: 0.5
-                    }
-                });
-
-                // Render Canvas Frame
-                function renderCanvas() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                    const cx = canvas.width / 2;
-                    const cy = canvas.height / 2;
-                    const p = scrollState.progress;
-
-                    // Dynamic background ambient lighting shifting on scroll
-                    const bgGrad = ctx.createRadialGradient(cx, cy, 50, cx, cy, Math.max(canvas.width, canvas.height));
-                    bgGrad.addColorStop(0, `rgba(28, 24, 20, ${0.8 - p * 0.3})`);
-                    bgGrad.addColorStop(0.6, `rgba(13, 13, 13, 0.95)`);
-                    bgGrad.addColorStop(1, '#0d0d0d');
-                    ctx.fillStyle = bgGrad;
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                    // Animated Perfume Flask Crystalline Silhouette
-                    ctx.save();
-                    ctx.translate(cx, cy);
-
-                    // Rotation & scale shifts directly tied to scroll
-                    const rotationAngle = p * Math.PI * 1.5;
-                    const scaleFactor = 1 + Math.sin(p * Math.PI) * 0.15;
-                    ctx.rotate(rotationAngle);
-                    ctx.scale(scaleFactor, scaleFactor);
-
-                    // Outer glowing luxury aura
-                    const auraGrad = ctx.createRadialGradient(0, 0, 40, 0, 0, 220);
-                    auraGrad.addColorStop(0, `rgba(197, 168, 128, ${0.25 + Math.sin(p * Math.PI * 2) * 0.1})`);
-                    auraGrad.addColorStop(0.7, `rgba(197, 168, 128, 0.03)`);
-                    auraGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-                    ctx.fillStyle = auraGrad;
-                    ctx.beginPath();
-                    ctx.arc(0, 0, 220, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Bottle Glass Geometric Silhouette
-                    ctx.strokeStyle = `rgba(197, 168, 128, ${0.4 + Math.cos(p * Math.PI) * 0.2})`;
-                    ctx.lineWidth = 1.5;
-
-                    // Main Bottle Body Outer Frame
-                    const bWidth = 140;
-                    const bHeight = 180;
-                    ctx.strokeRect(-bWidth / 2, -bHeight / 2 + 20, bWidth, bHeight);
-
-                    // Inner Crystalline Bevels
-                    ctx.strokeStyle = 'rgba(250, 249, 246, 0.15)';
-                    ctx.strokeRect(-bWidth / 2 + 12, -bHeight / 2 + 32, bWidth - 24, bHeight - 24);
-
-                    // Bottle Cap / Nozzle Gold Crown
-                    ctx.fillStyle = '#C5A880';
-                    ctx.fillRect(-25, -bHeight / 2 - 20, 50, 25);
-                    ctx.fillRect(-15, -bHeight / 2 - 32, 30, 12);
-
-                    // Scent Fluid Layer with animated scroll wave
-                    const fluidY = (bHeight / 2 - 10) - (p * (bHeight - 30));
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.rect(-bWidth / 2 + 4, -bHeight / 2 + 24, bWidth - 8, bHeight - 8);
-                    ctx.clip();
-
-                    const fluidGrad = ctx.createLinearGradient(0, bHeight / 2, 0, -bHeight / 2);
-                    fluidGrad.addColorStop(0, 'rgba(197, 168, 128, 0.6)');
-                    fluidGrad.addColorStop(1, 'rgba(191, 163, 124, 0.2)');
-                    ctx.fillStyle = fluidGrad;
-
-                    ctx.beginPath();
-                    ctx.moveTo(-bWidth / 2, bHeight / 2);
-                    for (let x = -bWidth / 2; x <= bWidth / 2; x += 10) {
-                        const wave = Math.sin((x + p * 300) * 0.05) * 6;
-                        ctx.lineTo(x, fluidY + wave);
-                    }
-                    ctx.lineTo(bWidth / 2, bHeight / 2);
-                    ctx.closePath();
-                    ctx.fill();
-                    ctx.restore();
-
-                    ctx.restore();
-
-                    // Dynamic Floating Gold Particles
-                    particles.forEach(pt => {
-                        pt.y += pt.speedY + (p * 0.5);
-                        if (pt.y < 0) pt.y = canvas.height;
-                        if (pt.y > canvas.height) pt.y = 0;
-
-                        const depthAlpha = pt.baseAlpha * (0.5 + Math.sin(p * Math.PI + pt.z) * 0.5);
-                        ctx.fillStyle = pt.goldTone;
-                        ctx.globalAlpha = Math.max(0.05, Math.min(1, depthAlpha));
-
-                        ctx.beginPath();
-                        ctx.arc(
-                            (pt.x + p * 100 * pt.z) % canvas.width,
-                            pt.y,
-                            pt.radius * (1 + p * 0.5),
-                            0,
-                            Math.PI * 2
-                        );
-                        ctx.fill();
-                    });
-                    ctx.globalAlpha = 1.0;
-
-                    requestAnimationFrame(renderCanvas);
-                }
-
-                renderCanvas();
+                preloadImages();
             }
+
         });
+
