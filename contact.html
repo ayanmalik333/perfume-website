@@ -451,81 +451,28 @@
             if (typeof gsap !== 'undefined') {
                 gsap.registerPlugin(ScrollTrigger);
                 
-                // Add class hooks for animation
-                const headerElements = document.querySelectorAll('.text-center.mb-16 > *');
-                const contactCards = document.querySelectorAll('.space-y-12 > div');
-                const formContainer = document.querySelector('.bg-\\[\\#121214\\]');
-                const formInputs = document.querySelectorAll('#contactForm > div');
-                const submitBtn = document.querySelector('#contactForm .pt-4');
+                // Consolidate selectors for a single unified stagger sequence
+                const staggerElements = [
+                    ...document.querySelectorAll('.text-center.mb-16 > *'),
+                    ...document.querySelectorAll('.space-y-12 > div'),
+                    document.querySelector('.bg-\\[\\#121214\\]'),
+                    ...document.querySelectorAll('#contactForm > div, #contactForm .pt-4')
+                ];
                 
-                // 1. Header Reveal
-                gsap.fromTo(headerElements, 
-                    { opacity: 0, y: 40 },
-                    { 
-                        opacity: 1, 
-                        y: 0, 
-                        duration: 0.8, 
-                        ease: "power2.out", 
-                        stagger: 0.15,
-                        scrollTrigger: {
-                            trigger: ".text-center.mb-16",
-                            start: "top 90%",
-                            toggleActions: "play none none none"
-                        }
+                // Consistent Global GSAP Frame Animation (Bottom to Top)
+                gsap.from(staggerElements, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.7,
+                    ease: "power2.out",
+                    stagger: 0.1,
+                    clearProps: "all",
+                    scrollTrigger: {
+                        trigger: ".max-w-7xl",
+                        start: "top 85%",
+                        toggleActions: "play none none none"
                     }
-                );
-                
-                // 2. Left Side: Contact Info Stagger
-                gsap.fromTo(contactCards, 
-                    { opacity: 0, y: 50 },
-                    { 
-                        opacity: 1, 
-                        y: 0, 
-                        duration: 0.8, 
-                        ease: "power2.out", 
-                        stagger: 0.15,
-                        scrollTrigger: {
-                            trigger: ".space-y-12",
-                            start: "top 85%",
-                            toggleActions: "play none none none"
-                        }
-                    }
-                );
-                
-                // 3. Right Side: Form Container Reveal
-                gsap.fromTo(formContainer,
-                    { opacity: 0, y: 60 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.8,
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: formContainer,
-                            start: "top 85%",
-                            toggleActions: "play none none none"
-                        }
-                    }
-                );
-                
-                // 4. Form Fields & Button Stagger
-                const allFormElements = [...Array.from(formInputs), submitBtn];
-                gsap.fromTo(allFormElements,
-                    { opacity: 0, y: 30 },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.6,
-                        ease: "power2.out",
-                        stagger: 0.1,
-                        delay: 0.3, // Wait for container to start revealing
-                        scrollTrigger: {
-                            trigger: formContainer,
-                            start: "top 85%",
-                            toggleActions: "play none none none"
-                        }
-                    }
-                );
+                });
             }
         });
     </script>
