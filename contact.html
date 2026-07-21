@@ -343,20 +343,11 @@
             </div>
         </main>
 
-    <!-- Supabase JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+    <!-- Direct REST API Implementation -->
     <script>
-        // Supabase configuration - User should replace these with their actual keys
         const supabaseUrl = 'https://ohgtcppbhmkqjkheuskv.supabase.co';
         const supabaseKey = 'sb_publishable_L3vS2qNyjhgbx7rNf4-BVQ_jQSxTlHT';
-        
-        let supabase;
-        try {
-            supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-        } catch (e) {
-            console.error("Supabase client initialization failed. Please add your actual keys.", e);
-        }
+        const restEndpoint = `${supabaseUrl}/rest/v1/contact_inquiries`;
 
         document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -365,14 +356,12 @@
             const btnText = document.getElementById('btnText');
             const btnLoader = document.getElementById('btnLoader');
             const toast = document.getElementById('form-toast');
-            const errorToast = document.getElementById('form-error');
-            const errorMsg = document.getElementById('form-error-msg');
             
             // Collect selected notes
             const notesElements = document.querySelectorAll('.note-cb:checked');
             const preferred_notes = Array.from(notesElements).map(el => el.value);
 
-            // Payload
+            // Payload mapping directly to table columns
             const formData = {
                 full_name: document.getElementById('full_name').value,
                 email: document.getElementById('email').value,
@@ -386,28 +375,32 @@
             btn.disabled = true;
             btnText.innerText = 'SENDING...';
             btnLoader.classList.remove('hidden');
-            
-            // Hide previous toasts
-            toast.classList.add('-translate-y-full');
-            errorToast.classList.add('-translate-y-full');
 
             try {
-                if(false) {
-                     throw new Error('Supabase configuration is missing. Please add your API keys to contact.html');
+                console.log('Attempting REST POST to:', restEndpoint);
+                console.log('Payload:', formData);
+                
+                const response = await fetch(restEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': supabaseKey,
+                        'Authorization': `Bearer ${supabaseKey}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=representation'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (!response.ok) {
+                    const errorBody = await response.text();
+                    throw new Error(`HTTP ${response.status} ${response.statusText}\n${errorBody}`);
                 }
                 
-                console.log('Attempting to insert into Supabase contact_inquiries:', formData);
-                
-                const { data, error } = await supabase
-                    .from('contact_inquiries')
-                    .insert([formData]);
-                    
-                console.log('Supabase insert response:', { data, error });
+                const responseData = await response.json();
+                console.log('Success Response:', responseData);
 
-                if (error) throw error;
-
-                // Success
-                console.log('Successfully inserted inquiry.');
+                // HTTP Success (200/201)
+                alert("Thank you! Your message has been sent.");
                 toast.classList.remove('-translate-y-full');
                 document.getElementById('contactForm').reset();
                 
@@ -416,12 +409,14 @@
                 }, 5000);
 
             } catch (err) {
-                console.error('Submission Error:', err);
+                console.error('REST API Submission Error:', err);
                 
-                // Explicit alert for debugging any RLS or schema mismatch issues
-                alert("Supabase Submission Error: " + (err.message || JSON.stringify(err)));
+                // Immediate Visual Diagnostic for HTTP Failure (4xx/5xx)
+                alert("Supabase REST API Error:\n\n" + err.message);
                 
-                errorMsg.innerText = err.message || 'Please check your connection and try again.';
+                const errorToast = document.getElementById('form-error');
+                const errorMsg = document.getElementById('form-error-msg');
+                errorMsg.innerText = 'Submission failed. Check the alert for details.';
                 errorToast.classList.remove('-translate-y-full');
                 
                 setTimeout(() => {
