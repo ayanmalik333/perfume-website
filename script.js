@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <h3 class="text-[13px] sm:text-[14px] font-sans font-medium text-lightWarm leading-tight min-h-[40px] group-hover:text-accent transition-colors duration-200">${prod.name}</h3>
                                 <div class="flex items-center space-x-1.5">
                                     <div class="flex items-center text-accent">
-                                        ${'Ã¢Ëœâ€¦'.repeat(5)}
+                                        ${'&#9733;'.repeat(5)}
                                     </div>
                                     <span class="text-[10px] font-sans text-[#a0a0a5]">(${prod.reviewsCount})</span>
                                 </div>
@@ -394,40 +394,51 @@ document.addEventListener('DOMContentLoaded', () => {
                     const grid = section.querySelector('.grid, #product-grid, #category-bar');
                     
                     if (grid && grid.children.length > 1) {
-                        gsap.from(section, {
+                        gsap.fromTo(section, {
+                            opacity: 0,
+                            y: 30
+                        }, {
                             scrollTrigger: {
                                 trigger: section,
                                 start: "top 90%",
                                 toggleActions: "play none none none"
                             },
-                            opacity: 0,
-                            y: 30,
+                            opacity: 1,
+                            y: 0,
                             duration: 0.6,
-                            ease: "power2.out"
+                            ease: "power2.out",
+                            clearProps: "all"
                         });
                         
-                        gsap.from(grid.children, {
+                        gsap.fromTo(grid.children, {
+                            opacity: 0,
+                            y: 50
+                        }, {
                             scrollTrigger: {
                                 trigger: grid,
                                 start: "top 90%",
                                 toggleActions: "play none none none"
                             },
-                            opacity: 0,
-                            y: 50,
+                            opacity: 1,
+                            y: 0,
                             duration: 0.6,
                             stagger: 0.08,
                             ease: "power2.out",
-                            delay: 0.1
+                            delay: 0.1,
+                            clearProps: "all"
                         });
                     } else {
-                        gsap.from(section, {
+                        gsap.fromTo(section, {
+                            opacity: 0,
+                            y: 50
+                        }, {
                             scrollTrigger: {
                                 trigger: section,
                                 start: "top 90%",
                                 toggleActions: "play none none none"
                             },
-                            opacity: 0,
-                            y: 50,
+                            opacity: 1,
+                            y: 0,
                             duration: 0.6,
                             ease: "power2.out"
                         });
@@ -469,3 +480,4 @@ setTimeout(() => {
         ScrollTrigger.refresh();
     }
 }, 1500);
+
