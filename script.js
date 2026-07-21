@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     // Set active nav link
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('nav a, #mobile-menu a').forEach(link => {
@@ -360,6 +360,75 @@
 
             // Register GSAP ScrollTrigger
             gsap.registerPlugin(ScrollTrigger);
+
+            // ----------------------------------------------------
+            // 7. Transparent Header Scroll & GSAP Scroll Reveals
+            // ----------------------------------------------------
+            
+            // Header Scroll Toggle
+            const mainHeader = document.getElementById('main-header');
+            if (mainHeader) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        mainHeader.classList.remove('bg-transparent', 'border-transparent');
+                        mainHeader.classList.add('bg-darkBg/80', 'backdrop-blur-md', 'border-accent/15');
+                    } else {
+                        mainHeader.classList.add('bg-transparent', 'border-transparent');
+                        mainHeader.classList.remove('bg-darkBg/80', 'backdrop-blur-md', 'border-accent/15');
+                    }
+                });
+            }
+
+            // Global Scroll Reveal Animations (Bottom to Top)
+            setTimeout(() => {
+                const revealSections = document.querySelectorAll('section:not(#hero), footer');
+                
+                revealSections.forEach(section => {
+                    const grid = section.querySelector('.grid, #product-grid, #category-bar');
+                    
+                    if (grid && grid.children.length > 1) {
+                        gsap.from(section, {
+                            scrollTrigger: {
+                                trigger: section,
+                                start: "top 85%",
+                                toggleActions: "play none none reverse"
+                            },
+                            opacity: 0,
+                            y: 30,
+                            duration: 0.8,
+                            ease: "power2.out"
+                        });
+                        
+                        gsap.from(grid.children, {
+                            scrollTrigger: {
+                                trigger: grid,
+                                start: "top 85%",
+                                toggleActions: "play none none reverse"
+                            },
+                            opacity: 0,
+                            y: 50,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            ease: "power2.out",
+                            delay: 0.2
+                        });
+                    } else {
+                        gsap.from(section, {
+                            scrollTrigger: {
+                                trigger: section,
+                                start: "top 85%",
+                                toggleActions: "play none none reverse"
+                            },
+                            opacity: 0,
+                            y: 50,
+                            duration: 0.8,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+                
+                ScrollTrigger.refresh();
+            }, 100);
 
         });
 
