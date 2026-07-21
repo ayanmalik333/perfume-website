@@ -110,8 +110,6 @@ let cart = [];
 // Elements
 const canvas = document.getElementById('animation-canvas');
 const ctx = canvas.getContext('2d');
-const loader = document.getElementById('loader');
-const loaderPercentage = document.getElementById('loader-percentage');
 const categoryBar = document.getElementById('category-bar');
 const productGrid = document.getElementById('product-grid');
 const socialGrid = document.getElementById('social-grid');
@@ -137,8 +135,6 @@ function preloadImages() {
     const img = new Image();
     img.onload = () => {
       loadedCount++;
-      const percent = Math.floor((loadedCount / frameCount) * 100);
-      loaderPercentage.textContent = `${percent}%`;
 
       if (loadedCount === frameCount) {
         onAllImagesLoaded();
@@ -156,7 +152,6 @@ function preloadImages() {
 }
 
 function onAllImagesLoaded() {
-  loader.classList.add('fade-out');
   resizeCanvas();
   updateTargetFrame();
   currentFrame = targetFrame;
