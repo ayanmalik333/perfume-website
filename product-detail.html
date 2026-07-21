@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
 <head>
@@ -175,15 +175,15 @@
                     </div>
                 </div>
             </div>
-        <main class="flex-grow pt-32 pb-24" id="product-detail-page">
+        <main class="flex-grow pt-32 pb-24 bg-[#050505]/80 backdrop-blur-md relative z-10" id="product-detail-page">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 <!-- Main Grid -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
                     
                     <!-- Left: Gallery -->
-                    <div class="g-frame-reveal">
-                        <div class="sticky top-32 space-y-4">
+                    <div class="g-frame-reveal" id="gallery-container">
+                        <div class="space-y-4" id="gallery-pin-target">
                             <!-- Main Image -->
                             <div class="aspect-[4/5] bg-[#121214] rounded-2xl overflow-hidden border border-accent/15 flex items-center justify-center p-4 relative group">
                                 <img id="pd-main-image" src="" alt="Product Image" class="w-full h-full object-cover rounded-xl transition-transform duration-700 group-hover:scale-105">
@@ -252,7 +252,7 @@
                 </div>
                 
                 <!-- Reviews Section -->
-                <div class="mt-32 border-t border-accent/15 pt-20">
+                <div class="mt-32 border-t border-accent/15 pt-20" id="reviews-section">
                     <div class="text-center mb-16 g-frame-reveal">
                         <span class="text-[10px] font-sans font-bold tracking-[0.25em] text-accent uppercase">Client Experiences</span>
                         <h2 class="font-serif text-3xl sm:text-4xl text-lightWarm mt-3">Verified Reviews</h2>
@@ -501,11 +501,57 @@
 
     <!-- Complete Integrated Dynamic & Scroll Animation Script -->
     <script src="script.js" defer></script>
+
+    <!-- Specific GSAP ScrollTrigger Logic for Product Details Page -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Give script.js time to inject dynamic content
+            setTimeout(() => {
+                gsap.registerPlugin(ScrollTrigger);
+
+                // 1. GSAP Pin for the Left Gallery
+                const galleryTarget = document.getElementById('gallery-pin-target');
+                const infoColumn = document.querySelector('.lg\\:col-span-2, .grid > div:nth-child(2)'); // The right info column
+
+                if (galleryTarget && window.innerWidth >= 1024) {
+                    ScrollTrigger.create({
+                        trigger: "#gallery-container",
+                        pin: galleryTarget,
+                        pinSpacing: true,
+                        start: "top 12%",
+                        end: "bottom top", 
+                        // The end relative trigger ensures scroll flow doesn't trap the viewport content
+                    });
+                }
+
+                // 2. Bottom-to-Top Stagger Reveals for PDP specific elements
+                const pRevealElements = document.querySelectorAll('.g-frame-reveal');
+                pRevealElements.forEach((el, i) => {
+                    gsap.fromTo(el, {
+                        opacity: 0,
+                        y: 45
+                    }, {
+                        scrollTrigger: {
+                            trigger: el,
+                            start: "top 85%",
+                            toggleActions: "play none none none"
+                        },
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.7,
+                        ease: "power2.out",
+                        delay: i * 0.1,
+                        clearProps: "all"
+                    });
+                });
+
+                // 3. Force GSAP recalculation now that dynamic product data/images are in the DOM
+                ScrollTrigger.refresh();
+                
+            }, 600); // 600ms delay ensures script.js products are injected and images begin loading
+        });
+    </script>
 </body>
-
-</html>
-
-
 
 
 
