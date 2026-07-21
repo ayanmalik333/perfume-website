@@ -28,11 +28,86 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
 
             const products = [
-                { id: "perfume-1", name: "Santal Nobile Eau de Parfum", category: "Signature Collection", price: 185.00, rating: 4.9, reviewsCount: 1420, image: "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a" },
-                { id: "perfume-2", name: "Oud Imperial Extrait de Parfum", category: "Oud Collection", price: 245.00, rating: 4.9, reviewsCount: 897, image: "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a" },
-                { id: "perfume-3", name: "Rose Extase Eau de Parfum", category: "Floral Collection", price: 165.00, rating: 4.8, reviewsCount: 1102, image: "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a" },
-                { id: "perfume-4", name: "Neroli Marine Eau de Parfum", category: "Fresh Collection", price: 155.00, rating: 4.7, reviewsCount: 741, image: "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a" },
-                { id: "perfume-5", name: "Or Noir Limited Edition", category: "Limited Edition", price: 320.00, rating: 5.0, reviewsCount: 314, image: "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a" }
+                { 
+                    id: "perfume-1", 
+                    name: "Santal Nobile Eau de Parfum", 
+                    category: "Signature Collection", 
+                    price: 185.00, 
+                    rating: 4.9, 
+                    reviewsCount: 1420, 
+                    image: "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                    description: "An iconic, timeless fragrance featuring the warmth of sandalwood interlaced with subtle amber and floral undertones. Handcrafted for the modern connoisseur.",
+                    features: ["Top: Bergamot, Cardamom", "Heart: Sandalwood, Violet", "Base: Amber, Musk", "Volume: 100ml / 3.4 oz", "Endurance: 12+ hours"],
+                    images: [
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a"
+                    ]
+                },
+                { 
+                    id: "perfume-2", 
+                    name: "Oud Imperial Extrait de Parfum", 
+                    category: "Oud Collection", 
+                    price: 245.00, 
+                    rating: 4.9, 
+                    reviewsCount: 897, 
+                    image: "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                    description: "A mysterious and rich composition built around the rarest, most precious agarwood. Designed to leave a lasting, unforgettable trail.",
+                    features: ["Top: Saffron, Rose", "Heart: Rare Oud, Leather", "Base: Patchouli, Vanilla", "Volume: 50ml / 1.7 oz", "Endurance: 24+ hours"],
+                    images: [
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a"
+                    ]
+                },
+                { 
+                    id: "perfume-3", 
+                    name: "Rose Extase Eau de Parfum", 
+                    category: "Floral Collection", 
+                    price: 165.00, 
+                    rating: 4.8, 
+                    reviewsCount: 1102, 
+                    image: "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                    description: "Velvety and intoxicating, an exquisite blend of pure Bulgarian rose absolute enveloped in soft musk and sweet woods.",
+                    features: ["Top: Pink Pepper, Lychee", "Heart: Bulgarian Rose, Peony", "Base: White Musk, Cedarwood", "Volume: 100ml / 3.4 oz", "Endurance: 10+ hours"],
+                    images: [
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a"
+                    ]
+                },
+                { 
+                    id: "perfume-4", 
+                    name: "Neroli Marine Eau de Parfum", 
+                    category: "Fresh Collection", 
+                    price: 155.00, 
+                    rating: 4.7, 
+                    reviewsCount: 741, 
+                    image: "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                    description: "Crisp and scent-awakening. A burst of Mediterranean citrus and marine accords for the perfect summer escape.",
+                    features: ["Top: Lemon, Mandarin, Sea Salt", "Heart: Neroli, Orange Blossom", "Base: Vetiver, Ambergris", "Volume: 100ml / 3.4 oz", "Endurance: 8+ hours"],
+                    images: [
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a"
+                    ]
+                },
+                { 
+                    id: "perfume-5", 
+                    name: "Or Noir Limited Edition", 
+                    category: "Limited Edition", 
+                    price: 320.00, 
+                    rating: 5.0, 
+                    reviewsCount: 314, 
+                    image: "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                    description: "Extremely rare and exclusive blends. Bottled in hand-polished obsidian glass with gold leaf details.",
+                    features: ["Top: Black Truffle, Ylang-Ylang", "Heart: Black Orchid, Rum", "Base: Incense, Dark Chocolate", "Volume: 50ml / 1.7 oz", "Endurance: 24+ hours"],
+                    images: [
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a",
+                        "https://red-glamorous-crane-920.mypinata.cloud/ipfs/bafybeidy5osju66tzukivftm72nfiqlplj6cjx3phqqoj6wtms3bisze2a"
+                    ]
+                }
             ];
 
             const socialImages = [
@@ -67,13 +142,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (productGrid) {
                 productGrid.innerHTML = products.map(prod => `
                     <div class="group flex flex-col justify-between h-full bg-[#121214] rounded-xl p-4 border border-accent/15 hover:border-accent/40 transition-all duration-300">
-                        <div class="aspect-[4/5] bg-[#000] rounded-lg overflow-hidden relative border border-accent/10 flex items-center justify-center p-2">
-                            <img loading="lazy" decoding="async" src="${prod.image}" alt="${prod.name}" class="w-full h-full object-cover rounded transform duration-700 ease-out group-hover:scale-105">
-                        </div>
+                        <a href="product-detail.html?id=${prod.id}" class="block relative">
+                            <div class="aspect-[4/5] bg-[#000] rounded-lg overflow-hidden relative border border-accent/10 flex items-center justify-center p-2">
+                                <img loading="lazy" decoding="async" src="${prod.image}" alt="${prod.name}" class="w-full h-full object-cover rounded transform duration-700 ease-out group-hover:scale-105">
+                            </div>
+                        </a>
                         <div class="pt-4 flex flex-col justify-between flex-grow">
                             <div class="space-y-1.5 text-left">
                                 <span class="text-[9px] font-sans font-semibold tracking-wider text-accent uppercase">${prod.category}</span>
-                                <h3 class="text-[13px] sm:text-[14px] font-sans font-medium text-lightWarm leading-tight min-h-[40px] group-hover:text-accent transition-colors duration-200">${prod.name}</h3>
+                                <a href="product-detail.html?id=${prod.id}" class="block">
+                                    <h3 class="text-[13px] sm:text-[14px] font-sans font-medium text-lightWarm leading-tight min-h-[40px] hover:text-accent transition-colors duration-200">${prod.name}</h3>
+                                </a>
                                 <div class="flex items-center space-x-1.5">
                                     <div class="flex items-center text-accent">
                                         ${'&#9733;'.repeat(5)}
@@ -100,6 +179,77 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="absolute inset-0 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                     </div>
                 `).join('');
+            }
+
+            // ==========================================
+            // 2.5 DYNAMIC PRODUCT DETAILS PAGE
+            // ==========================================
+            const pdpContainer = document.getElementById('product-detail-page');
+            if (pdpContainer) {
+                const params = new URLSearchParams(window.location.search);
+                const productId = params.get('id');
+                const product = products.find(p => p.id === productId);
+                
+                if (product) {
+                    // Populate Main Info
+                    document.getElementById('pd-category').innerText = product.category;
+                    document.getElementById('pd-name').innerText = product.name;
+                    document.getElementById('pd-price').innerText = `$${product.price.toFixed(2)}`;
+                    document.getElementById('pd-reviews-count').innerText = `(${product.reviewsCount} REVIEWS)`;
+                    document.getElementById('pd-description').innerText = product.description;
+                    
+                    // Populate Stars
+                    const starsHtml = '&#9733;'.repeat(Math.floor(product.rating)) + 
+                                      (product.rating % 1 !== 0 ? '&#9734;' : ''); // simple fallback
+                    document.getElementById('pd-stars').innerHTML = starsHtml;
+                    document.getElementById('review-score').innerText = product.rating.toFixed(1);
+                    document.getElementById('review-stars-summary').innerHTML = starsHtml;
+                    document.getElementById('review-total').innerText = `Based on ${product.reviewsCount} reviews`;
+                    
+                    // Populate Features
+                    if(product.features) {
+                        document.getElementById('pd-features').innerHTML = product.features.map(f => `<li>• ${f}</li>`).join('');
+                    }
+
+                    // Populate Images
+                    document.getElementById('pd-main-image').src = product.image;
+                    if(product.images) {
+                        document.getElementById('pd-thumbnails').innerHTML = product.images.map((imgSrc, i) => `
+                            <div class="aspect-square bg-[#121214] rounded-lg overflow-hidden border ${i===0 ? 'border-accent' : 'border-accent/15 hover:border-accent/50'} cursor-pointer transition-colors p-1" onclick="document.getElementById('pd-main-image').src='${imgSrc}'">
+                                <img src="${imgSrc}" class="w-full h-full object-cover rounded">
+                            </div>
+                        `).join('');
+                    }
+                    
+                    // Add to Cart Handlers
+                    document.getElementById('pd-add-to-cart').onclick = () => window.addToCart(product.id);
+                    document.getElementById('pd-buy-now').onclick = () => {
+                        window.addToCart(product.id);
+                        // Redirect to checkout simulation (we open cart for now)
+                        window.openCart();
+                    };
+                    
+                    // Fake Review List
+                    const fakeReviews = [
+                        { name: "Eleanor V.", date: "Oct 12, 2025", text: "Absolutely intoxicating. The dry down on this is unlike anything I've experienced." },
+                        { name: "Marcus T.", date: "Sep 28, 2025", text: "Incredible sillage and longevity. Definitely a staple in my winter collection." },
+                        { name: "Sophia R.", date: "Aug 05, 2025", text: "The packaging alone is a work of art. The scent profile is complex and beautiful." }
+                    ];
+                    document.getElementById('pd-reviews-list').innerHTML = fakeReviews.map(r => `
+                        <div class="bg-[#121214] border border-accent/15 rounded-xl p-6 transition-all duration-300 hover:border-accent/30">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h4 class="text-[13px] font-sans font-bold text-lightWarm">${r.name} <span class="text-accent ml-2 text-[10px] tracking-wider uppercase">Verified</span></h4>
+                                    <div class="flex text-accent text-[12px] mt-1">${'&#9733;'.repeat(5)}</div>
+                                </div>
+                                <span class="text-[10px] text-[#a0a0a5]">${r.date}</span>
+                            </div>
+                            <p class="text-[12px] text-[#ECEAE6]/70 leading-relaxed font-sans">${r.text}</p>
+                        </div>
+                    `).join('');
+                } else {
+                    pdpContainer.innerHTML = `<div class="text-center py-32"><h1 class="text-3xl text-accent font-serif">Product not found</h1><a href="shop.html" class="block mt-4 text-[12px] uppercase tracking-widest hover:text-white">Return to Shop</a></div>`;
+                }
             }
 
             // ==========================================
