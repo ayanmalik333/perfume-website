@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
     // Set active nav link
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('nav a, #mobile-menu a').forEach(link => {
@@ -28,19 +28,19 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
 
             const products = [
-                { id: "perfume-1", name: "Santal Nobile Eau de Parfum", category: "Signature Collection", price: 185.00, rating: 4.9, reviewsCount: 1420, image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&q=80&w=600" },
-                { id: "perfume-2", name: "Oud Imperial Extrait de Parfum", category: "Oud Collection", price: 245.00, rating: 4.9, reviewsCount: 897, image: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&q=80&w=600" },
-                { id: "perfume-3", name: "Rose Extase Eau de Parfum", category: "Floral Collection", price: 165.00, rating: 4.8, reviewsCount: 1102, image: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&q=80&w=600" },
-                { id: "perfume-4", name: "Neroli Marine Eau de Parfum", category: "Fresh Collection", price: 155.00, rating: 4.7, reviewsCount: 741, image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=80&w=600" },
-                { id: "perfume-5", name: "Or Noir Limited Edition", category: "Limited Edition", price: 320.00, rating: 5.0, reviewsCount: 314, image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&q=80&w=600" }
+                { id: "perfume-1", name: "Santal Nobile Eau de Parfum", category: "Signature Collection", price: 185.00, rating: 4.9, reviewsCount: 1420, image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&q=75&w=600" },
+                { id: "perfume-2", name: "Oud Imperial Extrait de Parfum", category: "Oud Collection", price: 245.00, rating: 4.9, reviewsCount: 897, image: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&q=75&w=600" },
+                { id: "perfume-3", name: "Rose Extase Eau de Parfum", category: "Floral Collection", price: 165.00, rating: 4.8, reviewsCount: 1102, image: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&q=75&w=600" },
+                { id: "perfume-4", name: "Neroli Marine Eau de Parfum", category: "Fresh Collection", price: 155.00, rating: 4.7, reviewsCount: 741, image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=75&w=600" },
+                { id: "perfume-5", name: "Or Noir Limited Edition", category: "Limited Edition", price: 320.00, rating: 5.0, reviewsCount: 314, image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&q=75&w=600" }
             ];
 
             const socialImages = [
-                "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&q=80&w=400",
-                "https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&q=80&w=400",
-                "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=80&w=400",
-                "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&q=80&w=400",
-                "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?auto=format&fit=crop&q=80&w=400"
+                "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&q=75&w=400",
+                "https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&q=75&w=400",
+                "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&q=75&w=400",
+                "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&q=75&w=400",
+                "https://images.unsplash.com/photo-1508746829417-e6f548d8d6ed?auto=format&fit=crop&q=75&w=400"
             ];
 
             let cart = [];
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 productGrid.innerHTML = products.map(prod => `
                     <div class="group flex flex-col justify-between h-full bg-[#121214] rounded-xl p-4 border border-accent/15 hover:border-accent/40 transition-all duration-300">
                         <div class="aspect-[4/5] bg-[#000] rounded-lg overflow-hidden relative border border-accent/10 flex items-center justify-center p-2">
-                            <img src="${prod.image}" alt="${prod.name}" class="w-full h-full object-cover rounded transform duration-700 ease-out group-hover:scale-105">
+                            <img loading="lazy" decoding="async" src="${prod.image}" alt="${prod.name}" class="w-full h-full object-cover rounded transform duration-700 ease-out group-hover:scale-105">
                         </div>
                         <div class="pt-4 flex flex-col justify-between flex-grow">
                             <div class="space-y-1.5 text-left">
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <h3 class="text-[13px] sm:text-[14px] font-sans font-medium text-lightWarm leading-tight min-h-[40px] group-hover:text-accent transition-colors duration-200">${prod.name}</h3>
                                 <div class="flex items-center space-x-1.5">
                                     <div class="flex items-center text-accent">
-                                        ${'â˜…'.repeat(5)}
+                                        ${'Ã¢Ëœâ€¦'.repeat(5)}
                                     </div>
                                     <span class="text-[10px] font-sans text-[#a0a0a5]">(${prod.reviewsCount})</span>
                                 </div>
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (socialGrid) {
                 socialGrid.innerHTML = socialImages.map((src, index) => `
                     <div class="aspect-square bg-[#121214] rounded-xl overflow-hidden border border-accent/20 group relative">
-                        <img src="${src}" alt="Social Aesthetic ${index + 1}" class="w-full h-full object-cover transform duration-500 ease-out group-hover:scale-105">
+                        <img loading="lazy" decoding="async" src="${src}" alt="Social Aesthetic ${index + 1}" class="w-full h-full object-cover transform duration-500 ease-out group-hover:scale-105">
                         <div class="absolute inset-0 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                     </div>
                 `).join('');
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         cartItemsContainer.innerHTML = cart.map(item => `
                             <div class="flex items-center space-x-4 py-3 border-b border-accent/10">
-                                <img src="${item.product.image}" class="w-16 h-20 object-cover rounded border border-accent/15">
+                                <img loading="lazy" decoding="async" src="${item.product.image}" class="w-16 h-20 object-cover rounded border border-accent/15">
                                 <div class="flex-grow">
                                     <h4 class="text-[12px] font-bold text-darkBg leading-tight">${item.product.name}</h4>
                                     <p class="text-[10px] text-[#7C7167] mt-0.5">$${item.product.price.toFixed(2)}</p>
@@ -433,3 +433,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
 
+
+
+window.addEventListener('load', () => { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(); });
