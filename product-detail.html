@@ -264,51 +264,39 @@
                         <h2 class="font-serif text-3xl sm:text-4xl text-lightWarm mt-3">Verified Reviews</h2>
                     </div>
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                        <!-- Review Summary & Form -->
-                        <div class="reveal-up lg:col-span-1 space-y-8" style="transition-delay: 0.1s;">
-                            <!-- Review Summary -->
-                            <div class="bg-darkBg p-8 border border-accent/15 rounded-2xl flex flex-col justify-center items-center text-center space-y-4">
-                                <h3 id="review-score" class="font-serif text-6xl text-lightWarm">4.9</h3>
-                                <div class="flex text-accent text-xl" id="review-stars-summary"></div>
-                                <span id="review-total" class="text-[11px] font-sans text-[#a0a0a5] uppercase tracking-wider">Based on 1420 reviews</span>
-                            </div>
-
-                            <!-- Write a Review Form -->
-                            <div class="bg-[#121214] p-8 border border-accent/15 rounded-2xl flex flex-col justify-center items-center text-center">
-                                <h4 class="text-[11px] font-bold tracking-[0.2em] text-lightWarm uppercase mb-6">Write a Review</h4>
-                                <form id="review-form" class="space-y-5 w-full max-w-xs mx-auto text-left">
-                                    <input type="text" id="review-name" required placeholder="Your Name" class="w-full bg-darkBg text-[#ECEAE6] px-4 py-3 text-[12px] tracking-wide placeholder-[#7C7167] focus:outline-none border border-accent/15 rounded">
-                                    
-                                    <div class="relative">
-                                        <select id="review-rating" required class="w-full bg-darkBg text-[#ECEAE6] px-4 py-3 text-[12px] tracking-wide focus:outline-none border border-accent/15 rounded appearance-none cursor-pointer">
-                                            <option value="" disabled selected>Select Rating</option>
-                                            <option value="5">★★★★★ - Perfect</option>
-                                            <option value="4">★★★★☆ - Great</option>
-                                            <option value="3">★★★☆☆ - Average</option>
-                                            <option value="2">★★☆☆☆ - Poor</option>
-                                            <option value="1">★☆☆☆☆ - Terrible</option>
-                                        </select>
-                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-accent">
-                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                                        </div>
+                    <div class="max-w-md mx-auto">
+                        <!-- Write a Review Form -->
+                        <div class="reveal-up bg-[#121214] p-8 border border-accent/15 rounded-2xl flex flex-col justify-center items-center text-center w-full" style="transition-delay: 0.1s;">
+                            <h4 class="text-[11px] font-bold tracking-[0.2em] text-lightWarm uppercase mb-6">Write a Review</h4>
+                            <form id="review-form" class="space-y-5 w-full mx-auto text-left">
+                                <input type="text" id="review-name" required placeholder="Your Name" class="w-full bg-darkBg text-[#ECEAE6] px-4 py-3 text-[12px] tracking-wide placeholder-[#7C7167] focus:outline-none border border-accent/15 rounded">
+                                
+                                <div class="relative">
+                                    <select id="review-rating" required class="w-full bg-darkBg text-[#ECEAE6] px-4 py-3 text-[12px] tracking-wide focus:outline-none border border-accent/15 rounded appearance-none cursor-pointer">
+                                        <option value="" disabled selected>Select Rating</option>
+                                        <option value="5">★★★★★ - Perfect</option>
+                                        <option value="4">★★★★☆ - Great</option>
+                                        <option value="3">★★★☆☆ - Average</option>
+                                        <option value="2">★★☆☆☆ - Poor</option>
+                                        <option value="1">★☆☆☆☆ - Terrible</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-accent">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                                     </div>
+                                </div>
 
-                                    <input type="text" id="review-title" required placeholder="Review Title" class="w-full bg-darkBg text-[#ECEAE6] px-4 py-3 text-[12px] tracking-wide placeholder-[#7C7167] focus:outline-none border border-accent/15 rounded">
-                                    
-                                    <textarea id="review-text" required placeholder="Share your thoughts..." rows="3" class="w-full bg-darkBg text-[#ECEAE6] px-4 py-3 text-[12px] tracking-wide placeholder-[#7C7167] focus:outline-none border border-accent/15 rounded resize-none"></textarea>
-                                    
-                                    <button type="submit" class="w-full bg-accent hover:bg-white text-darkBg text-[10px] font-bold tracking-[0.15em] uppercase py-3.5 transition-all duration-300 rounded shadow-md hover:shadow-lg mt-2">
-                                        Submit Review
-                                    </button>
-                                </form>
-                            </div>
+                                <input type="text" id="review-title" required placeholder="Review Title" class="w-full bg-darkBg text-[#ECEAE6] px-4 py-3 text-[12px] tracking-wide placeholder-[#7C7167] focus:outline-none border border-accent/15 rounded">
+                                
+                                <textarea id="review-text" required placeholder="Share your thoughts..." rows="3" class="w-full bg-darkBg text-[#ECEAE6] px-4 py-3 text-[12px] tracking-wide placeholder-[#7C7167] focus:outline-none border border-accent/15 rounded resize-none"></textarea>
+                                
+                                <button type="submit" class="w-full bg-accent hover:bg-white text-darkBg text-[10px] font-bold tracking-[0.15em] uppercase py-3.5 transition-all duration-300 rounded shadow-md hover:shadow-lg mt-2">
+                                    Submit Review
+                                </button>
+                            </form>
                         </div>
                         
-                        <!-- Review List -->
-                        <div class="reveal-up lg:col-span-2 space-y-6" id="pd-reviews-list" style="transition-delay: 0.2s;">
-                            <!-- Populated by JS -->
-                        </div>
+                        <!-- Dynamic Review List Container -->
+                        <div id="pd-reviews-list" class="mt-8 space-y-6"></div>
                     </div>
                 </div>
 
