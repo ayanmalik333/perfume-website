@@ -248,26 +248,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // ==========================================
-            // 4. GSAP SCROLL-BASED FRAME ANIMATION
+            // 4. GSAP SCROLL-BASED FRAME ANIMATION (OPTIMIZED)
             // ==========================================
-            const frameCount = 240;
-            const ease = 0.08; 
-            const framePath = (index) => `./frames/${index.toString().padStart(4, '0')}.jpg`;
+            const isMobile = window.innerWidth < 768;
+            const frameStep = isMobile ? 2 : 1; // Skip frames on mobile to save RAM
+            const totalFrames = 240;
+            const frameCount = Math.floor(totalFrames / frameStep);
+            
+            // Allow fallback to WebP/AVIF if needed
+            const framePath = (index) => `./frames/${(index * frameStep || 1).toString().padStart(4, '0')}.jpg`;
 
             let animationFrames = new Array(frameCount);
             let loadedCount = 0;
             let firstFrameLoaded = false;
             let lastRenderedFrame = -1;
             let frameConfig = { frame: 0 };
+            let renderPending = false;
+            let useFallback = false;
 
             const canvas = document.getElementById("hero-canvas");
+            const canvasContainer = document.getElementById("canvas-container");
+            
             if (canvas) {
-                const ctx = canvas.getContext("2d");
+                const ctx = canvas.getContext("2d", { alpha: false }); // Optimize for no transparency
 
-                // 1. Image Preloading
+                // 1. Lightweight Image Preloader with Network Fallback
                 function preloadImages() {
-                    for (let i = 1; i <= frameCount; i++) {
+                    let loadingStartTime = Date.now();
+                    
+                    for (let i = 0; i < frameCount; i++) {
                         const img = new Image();
+                        img.decoding = "async"; // Non-blocking decode
                         
                         img.onload = () => {
                             loadedCount++;
@@ -275,19 +286,39 @@ document.addEventListener('DOMContentLoaded', () => {
                                 firstFrameLoaded = true;
                                 onFirstImageLoaded();
                             }
+                            
+                            // Dynamic Fallback: if first 10 frames take more than 2.5s, assume slow network
+                            if (loadedCount === 10 && (Date.now() - loadingStartTime > 2500)) {
+                                enableFallback();
+                            }
                         };
                         
                         img.onerror = () => {
-                            console.error(`Failed to load frame ${i}: ${img.src}`);
+                            console.warn(`Failed to load frame ${i}, enabling fallback.`);
+                            if (loadedCount === 0) enableFallback();
                             loadedCount++;
                         };
                         
                         img.src = framePath(i);
-                        animationFrames[i - 1] = img;
+                        animationFrames[i] = img;
+                    }
+                }
+
+                function enableFallback() {
+                    if (useFallback) return;
+                    useFallback = true;
+                    console.log("Slow network detected: Using smooth CSS fallback for hero animation.");
+                    if (canvasContainer) {
+                        canvas.style.transition = 'opacity 1s ease';
+                        canvas.style.opacity = '0';
+                        canvasContainer.style.background = `url(./frames/0001.jpg) center/cover no-repeat`;
+                        canvasContainer.style.transition = 'background-position 10s ease-in-out';
+                        setTimeout(() => { canvasContainer.style.backgroundPosition = 'bottom'; }, 100);
                     }
                 }
 
                 function onFirstImageLoaded() {
+                    if (useFallback) return;
                     resizeCanvas();
                     const initialFrame = Math.round(frameConfig.frame);
                     if (animationFrames[initialFrame] && animationFrames[initialFrame].complete) {
@@ -296,12 +327,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                // 2. Responsive Canvas Cover Fitting
+                // 2. Responsive Canvas Cover Fitting (Optimized render loop)
                 function drawImageCover(img) {
-                    if (!img || !img.complete || img.naturalWidth === 0) return;
+                    if (useFallback || !img || !img.complete || img.naturalWidth === 0) return;
+                    
                     const canvasWidth = canvas.width;
                     const canvasHeight = canvas.height;
-                    
                     const canvasRatio = canvasWidth / canvasHeight;
                     const imgRatio = img.naturalWidth / img.naturalHeight;
                     
@@ -319,14 +350,27 @@ document.addEventListener('DOMContentLoaded', () => {
                         offsetY = 0;
                     }
 
-                    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                    // Directly draw image over previous without clearRect (alpha: false handles this)
                     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
                 }
+
+                // 3. requestAnimationFrame loop for 60fps buttery smooth playback
+                function renderLoop() {
+                    if (renderPending && !useFallback) {
+                        const roundedFrame = Math.round(frameConfig.frame);
+                        if (roundedFrame !== lastRenderedFrame && animationFrames[roundedFrame] && animationFrames[roundedFrame].complete) {
+                            drawImageCover(animationFrames[roundedFrame]);
+                            lastRenderedFrame = roundedFrame;
+                        }
+                        renderPending = false;
+                    }
+                    requestAnimationFrame(renderLoop);
+                }
+                requestAnimationFrame(renderLoop);
 
                 function resizeCanvas() {
                     canvas.width = window.innerWidth;
                     canvas.height = window.innerHeight;
-                    
                     const roundedFrame = Math.round(frameConfig.frame);
                     const img = animationFrames[roundedFrame];
                     if (img) drawImageCover(img);
@@ -342,27 +386,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (typeof gsap !== 'undefined') {
+                    // GSAP ScrollTrigger Scrub Tweaks with Hero Pinning
                     gsap.to(frameConfig, {
                         frame: frameCount - 1,
                         snap: "frame",
                         ease: "none",
                         scrollTrigger: {
-                            trigger: "body",
+                            trigger: "#hero",
                             start: "top top",
-                            end: "bottom bottom",
-                            scrub: 0.5
+                            end: "+=2500", // Smooth long scroll distance for frames
+                            scrub: 1, // 1 second smoothing
+                            pin: true,
+                            anticipatePin: 1
                         },
                         onUpdate: () => {
-                            const roundedFrame = Math.round(frameConfig.frame);
-                            if (roundedFrame !== lastRenderedFrame && animationFrames[roundedFrame] && animationFrames[roundedFrame].complete) {
-                                drawImageCover(animationFrames[roundedFrame]);
-                                lastRenderedFrame = roundedFrame;
-                            }
+                            renderPending = true; // Flag for requestAnimationFrame
                         }
                     });
                 }
 
-                preloadImages();
+                setTimeout(preloadImages, 50); // Initialize preloading asynchronously
             }
 
             // Register GSAP ScrollTrigger
