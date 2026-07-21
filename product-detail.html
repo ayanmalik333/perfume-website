@@ -509,20 +509,7 @@
             setTimeout(() => {
                 gsap.registerPlugin(ScrollTrigger);
 
-                // 1. GSAP Pin for the Left Gallery
-                const galleryTarget = document.getElementById('gallery-pin-target');
-                const infoColumn = document.querySelector('.lg\\:col-span-2, .grid > div:nth-child(2)'); // The right info column
-
-                if (galleryTarget && window.innerWidth >= 1024) {
-                    ScrollTrigger.create({
-                        trigger: "#gallery-container",
-                        pin: galleryTarget,
-                        pinSpacing: true,
-                        start: "top 12%",
-                        end: "bottom top", 
-                        // The end relative trigger ensures scroll flow doesn't trap the viewport content
-                    });
-                }
+                // 1. (REMOVED) Pinning logic was removed to enable natural scrolling.
 
                 // 2. Bottom-to-Top Stagger Reveals for PDP specific elements
                 const pRevealElements = document.querySelectorAll('.g-frame-reveal');
