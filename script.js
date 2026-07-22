@@ -181,76 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `).join('');
             }
 
-            // ==========================================
-            // 2.5 DYNAMIC PRODUCT DETAILS PAGE
-            // ==========================================
-            const pdpContainer = document.getElementById('product-detail-page');
-            if (pdpContainer) {
-                const params = new URLSearchParams(window.location.search);
-                const productId = params.get('id');
-                const product = products.find(p => p.id === productId);
-                
-                if (product) {
-                    // Populate Main Info
-                    document.getElementById('pd-category').innerText = product.category;
-                    document.getElementById('pd-name').innerText = product.name;
-                    document.getElementById('pd-price').innerText = `$${product.price.toFixed(2)}`;
-                    document.getElementById('pd-reviews-count').innerText = `(${product.reviewsCount} REVIEWS)`;
-                    document.getElementById('pd-description').innerText = product.description;
-                    
-                    // Populate Stars
-                    const starsHtml = '&#9733;'.repeat(Math.floor(product.rating)) + 
-                                      (product.rating % 1 !== 0 ? '&#9734;' : ''); // simple fallback
-                    document.getElementById('pd-stars').innerHTML = starsHtml;
-                    document.getElementById('review-score').innerText = product.rating.toFixed(1);
-                    document.getElementById('review-stars-summary').innerHTML = starsHtml;
-                    document.getElementById('review-total').innerText = `Based on ${product.reviewsCount} reviews`;
-                    
-                    // Populate Features
-                    if(product.features) {
-                        document.getElementById('pd-features').innerHTML = product.features.map(f => `<li>• ${f}</li>`).join('');
-                    }
 
-                    // Populate Images
-                    document.getElementById('pd-main-image').src = product.image;
-                    if(product.images) {
-                        document.getElementById('pd-thumbnails').innerHTML = product.images.map((imgSrc, i) => `
-                            <div class="aspect-square bg-[#121214] rounded-lg overflow-hidden border ${i===0 ? 'border-accent' : 'border-accent/15 hover:border-accent/50'} cursor-pointer transition-colors p-1" onclick="document.getElementById('pd-main-image').src='${imgSrc}'">
-                                <img src="${imgSrc}" class="w-full h-full object-cover rounded">
-                            </div>
-                        `).join('');
-                    }
-                    
-                    // Add to Cart Handlers
-                    document.getElementById('pd-add-to-cart').onclick = () => window.addToCart(product.id);
-                    document.getElementById('pd-buy-now').onclick = () => {
-                        window.addToCart(product.id);
-                        // Redirect to checkout simulation (we open cart for now)
-                        window.openCart();
-                    };
-                    
-                    // Fake Review List
-                    const fakeReviews = [
-                        { name: "Eleanor V.", date: "Oct 12, 2025", text: "Absolutely intoxicating. The dry down on this is unlike anything I've experienced." },
-                        { name: "Marcus T.", date: "Sep 28, 2025", text: "Incredible sillage and longevity. Definitely a staple in my winter collection." },
-                        { name: "Sophia R.", date: "Aug 05, 2025", text: "The packaging alone is a work of art. The scent profile is complex and beautiful." }
-                    ];
-                    document.getElementById('pd-reviews-list').innerHTML = fakeReviews.map(r => `
-                        <div class="bg-[#121214] border border-accent/15 rounded-xl p-6 transition-all duration-300 hover:border-accent/30">
-                            <div class="flex justify-between items-start mb-4">
-                                <div>
-                                    <h4 class="text-[13px] font-sans font-bold text-lightWarm">${r.name} <span class="text-accent ml-2 text-[10px] tracking-wider uppercase">Verified</span></h4>
-                                    <div class="flex text-accent text-[12px] mt-1">${'&#9733;'.repeat(5)}</div>
-                                </div>
-                                <span class="text-[10px] text-[#a0a0a5]">${r.date}</span>
-                            </div>
-                            <p class="text-[12px] text-[#ECEAE6]/70 leading-relaxed font-sans">${r.text}</p>
-                        </div>
-                    `).join('');
-                } else {
-                    pdpContainer.innerHTML = `<div class="text-center py-32"><h1 class="text-3xl text-accent font-serif">Product not found</h1><a href="shop.html" class="block mt-4 text-[12px] uppercase tracking-widest hover:text-white">Return to Shop</a></div>`;
-                }
-            }
 
             // ==========================================
             // 3. CART SYSTEM FUNCTIONS
@@ -711,6 +642,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     });
                 }
+
+                // Add to Cart Handlers
+                const addToCartBtn = document.getElementById('pd-add-to-cart');
+                const buyNowBtn = document.getElementById('pd-buy-now');
+                if (addToCartBtn) addToCartBtn.onclick = () => window.addToCart(product.id);
+                if (buyNowBtn) buyNowBtn.onclick = () => {
+                    window.addToCart(product.id);
+                    window.openCart();
+                };
 
                 // Handle Review Loading and Submission
                 const supabaseUrl = 'https://ohgtcppbhmkqjkheuskv.supabase.co';
