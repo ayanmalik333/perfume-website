@@ -714,7 +714,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Handle Review Loading and Submission
                 const supabaseUrl = 'https://ohgtcppbhmkqjkheuskv.supabase.co';
-                const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZ3RjcHBiaG1rcWpqaGV1c2t2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2MzIzMTgsImV4cCI6MjEwMDIwODMxOH0.uNkoYcfpTbHZjq5yAo-1jtSwoTu3jYQVAkEGx8f3CHQ';
+                const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oZ3RjcHBiaG1rcWpraGV1c2t2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2MzIzMTgsImV4cCI6MjEwMDIwODMxOH0.uNkoYcfpTbHZjq5yAo-1jtSwoTu3jYQVAkEGx8f3CHQ';
                 const reviewsEndpoint = `${supabaseUrl}/rest/v1/product_reviews`;
 
                 const reviewForm = document.getElementById('review-form');
