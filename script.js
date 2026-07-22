@@ -793,13 +793,16 @@ document.addEventListener('DOMContentLoaded', () => {
                                 })
                             });
 
-                            if (!response.ok) throw new Error('Failed to submit review');
+                            if (!response.ok) {
+                                const errorText = await response.text();
+                                throw new Error(`Supabase Error (${response.status}): ${errorText}`);
+                            }
                             
                             reviewForm.reset();
                             await fetchReviews();
                         } catch (error) {
                             console.error('Error submitting review:', error);
-                            alert("Failed to submit your review. Please try again later.");
+                            alert(`Failed to submit your review.\n\nDetails: ${error.message}`);
                         } finally {
                             submitBtn.innerText = originalBtnText;
                             submitBtn.disabled = false;
